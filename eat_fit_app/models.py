@@ -28,6 +28,9 @@ class RecipeCategory(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.category.name
+
 
 class Ingredients(models.Model):
     name = models.CharField(max_length=128)
@@ -43,6 +46,9 @@ class RecipeIngredients(models.Model):
     quantity = models.IntegerField()
     measure = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.ingredients.name
+
 
 class Occasion(models.Model):
     name = models.CharField(max_length=128, default='')
@@ -57,6 +63,9 @@ class RecipeOccasion(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, null=True)
     occasion = models.ForeignKey(Occasion, on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return self.occasion.name
+
 
 class Cuisine(models.Model):
     name = models.CharField(max_length=128)
@@ -70,3 +79,6 @@ class Cuisine(models.Model):
 class RecipeCuisine(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cuisine.name

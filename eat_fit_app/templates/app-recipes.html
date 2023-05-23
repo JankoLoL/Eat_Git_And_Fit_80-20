@@ -6,8 +6,13 @@
 </head>
 <body>
 {% for recipe in recipes %}
-    <ul>{{ recipe.name }}</ul>
+    <div>
+        <h3>{{ recipe.name }}</h3>
+        <p>{{ recipe.description }}</p>
+        <a href="{% url 'recipe_details' recipe.id %}">View Recipe Details</a>
 
+    </div>
 {% endfor %}
+<button><a href="{% url 'index' %}">Back to main page</a></button>
 </body>
 </html>

@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}</title>
+
 </head>
 <body>
+    <header>
+        <!-- Kod nagłówka strony -->
+    </header>
 
+    <nav>
+        <!-- Kod nawigacji strony -->
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- Kod stopki strony -->
+    </footer>
 </body>
 </html>

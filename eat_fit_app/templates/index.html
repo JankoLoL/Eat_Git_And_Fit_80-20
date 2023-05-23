@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-WELCOME TO MY PAGE
-</body>
-</html>
+{% extends '__base__.html' %}
+
+{% block title %}Welcome to My Recipe Website{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Welcome to my page</h1>
+        <p>Explore delicious and healthy recipes and start cooking!</p>
+        <a href="{% url 'recipes' %}" class="button">View Recipes</a>
+    </section>
+{% endblock %}
