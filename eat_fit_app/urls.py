@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from eat_fit_app.views import *
+from eat_fit_app.views import IndexView, RecipeListView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('eat_fit_app.urls')),
+    path('index/', IndexView.as_view() , name='index'),
+    path('recipes/', RecipeListView.as_view(), name='recipes'),
 ]
