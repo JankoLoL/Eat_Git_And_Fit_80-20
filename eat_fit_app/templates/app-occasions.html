@@ -1,0 +1,12 @@
+{% extends '__base__.html' %}
+{% block title %}
+    Occasions
+{% endblock %}
+{% block content %}
+
+
+{% for occasion in occasions %}
+    <li><a href="{% url 'recipes-by-occasion' occasion.id  %}" class="link-button"> {{ occasion.name }}</a></li>
+
+{% endfor %}
+{% endblock %}

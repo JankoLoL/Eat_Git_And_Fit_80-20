@@ -1,0 +1,13 @@
+{% extends '__base__.html' %}
+
+{% block content %}
+<a href="{% url 'index' %}">Back to Main Page</a>
+    <h1>Add Recipe</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Recipe</button>
+    </form>
+
+{% endblock %}
+
