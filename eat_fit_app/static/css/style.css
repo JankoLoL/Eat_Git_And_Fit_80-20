@@ -1,59 +1,128 @@
-/* Global styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #32BD03; /* Kolor tła */
+    color: white; /* Kolor tekstu */
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+header {
+    background-color: gray;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1, header h2 {
+    margin: 0;
+    color: white; /* Kolor napisu nagłówka */
+}
+
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
-  font-size: 32px;
-  color: #333;
+    font-size: 28px;
+    color: darkgreen;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-p {
-  font-size: 16px;
-  color: #666;
+h2 {
+    font-size: 16px;
+    color: darkgreen;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Main page specific styles */
-.main-content {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+h3{
+    font-size: 20px;
+    color: greenyellow;
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.main-content h1 {
-  margin-top: 0;
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.main-content p {
-  margin-bottom: 20px;
+a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
 }
 
-.main-content .button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 3px;
+.button{
+    background-color: #32BD03;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
 }
 
-.main-content .button:hover {
-  background-color: #0056b3;
+.button-view-recipe{
+    background-color: #32BD03;
+    color: black;
+    border: 2px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
 }
 
-.footer {
-  background-color: #f9f9f9;
-  padding: 10px;
-  text-align: center;
-  color: #666;
+.link-button{
+    background-color: #32BD03;
+    color: black;
+    border: 2px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #32BD03; /* Kolor tła */
+    color: white;
+    text-decoration: none;
+    border: 2px solid #32BD03; /* Grubość i kolor ramki */
+    border-radius: 4px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.navbar-brand:hover {
+    background-color: #45a049; /* Kolor tła po najechaniu */
+}
+
+.recipe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recipe-item {
+  width: 300px; /* Lub inna szerokość, którą chcesz ustawić dla przepisów */
+  margin: 10px;
 }
 

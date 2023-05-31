@@ -1,11 +1,43 @@
-{% extends '__base__.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome to my webpage!</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+    body {
+        background-image: url("static/images/background-pic.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    </style>
+</head>
 
-{% block title %}Welcome to My Recipe Website{% endblock %}
+<body>
 
-{% block content %}
+<header>
+    <h1>Home page</h1>
+    <h2>Explore delicious and healthy recipes, BON APPETIT!</h2>
+</header>
+
+<main>
     <section>
-        <h1>Welcome to my page</h1>
-        <p>Explore delicious and healthy recipes and start cooking!</p>
-        <a href="{% url 'recipes' %}" class="button">View Recipes</a>
+        <a href="{% url 'recipes' %}" class="button">Recipes</a><br>
+        <a href="{% url 'categories' %}" class="button">Categories</a><br>
+        <a href="{% url 'occasions' %}" class="button">Occasions</a><br>
+        <a href="{% url 'login' %}" class="button">Login</a><br>
+        <a href="{% url 'register' %}" class="button">Register</a><br>
     </section>
-{% endblock %}
+
+    {% if user.is_authenticated %}
+        <p>Welcome {{ user.username }}</p>
+        <a href="{% url 'logout' %}" class="button">Logout</a>
+    {% endif %}
+</main>
+
+</body>
+</html>

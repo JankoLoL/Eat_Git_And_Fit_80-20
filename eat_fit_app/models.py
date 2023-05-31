@@ -8,6 +8,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=128)
     recipe_ingredients = models.TextField()
     description = models.TextField()
+    instructions = models.TextField(default='')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -35,6 +36,7 @@ class RecipeCategory(models.Model):
 class Ingredients(models.Model):
     name = models.CharField(max_length=128)
     recipe = models.ManyToManyField(Recipe, through='RecipeIngredients', related_name='ingredients')
+
 
     def __str__(self):
         return self.name

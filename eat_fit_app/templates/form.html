@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends '__base__.html' %}
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+    </form>
+    <p> If you are not a User yet, please click "Register" button below</p>
+    <a class="navbar-brand" href="{% url 'register' %}">Register</a>
+
+
+{% endblock %}

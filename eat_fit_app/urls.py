@@ -14,16 +14,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.admindocs import views
 from django.urls import path, include, re_path
-from eat_fit_app.views import IndexView, RecipeListView, RecipeDetailsView, CategoryListView
-
+from eat_fit_app.views import IndexView, RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
+    RecipeEditView, RecipeDeleteView, OccasionListView, LoginView, LogoutView, CreateUserView, MainView, \
+    RecipeByCategoryView, RecipeByOccasionView
+from eat_fit_django_project import settings
 
 urlpatterns = [
 
-    path('', IndexView.as_view() , name='index'),
+    path('', MainView.as_view() , name='index'),
     path('recipes/', RecipeListView.as_view(), name='recipes'),
-    path('recipes/<int:recipe_id>/', RecipeDetailsView.as_view(), name='recipe_details'),
+    path('recipes/<int:recipe_id>/', RecipeDetailsView.as_view(), name='recipe-details'),
     path('categories/', CategoryListView.as_view(), name='categories'),
+    path('recipes/category/<int:category_id>/', RecipeByCategoryView.as_view(), name='recipes-by-category'),
+    path('recipes/occasion/<int:occasion_id>/', RecipeByOccasionView.as_view(), name='recipes-by-occasion'),
+    path('recipe/add/', RecipeAddView.as_view(), name='recipe-add'),
+    path('recipe/edit/<int:recipe_id>/', RecipeEditView.as_view(), name='recipe-edit'),
+    path('recipe/delete/<int:recipe_id>/', RecipeDeleteView.as_view(), name='recipe-delete'),
+    path('occasions/', OccasionListView.as_view(), name='occasions'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('register/', CreateUserView.as_view(), name='register')
+
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)

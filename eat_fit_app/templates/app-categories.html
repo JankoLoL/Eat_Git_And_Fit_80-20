@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Categories:</title>
-</head>
-<body>
+{% extends '__base__.html' %}
+{% block content %}
 <ul>
     {% for category in categories %}
-        <li>{{category}}</li>
+        <li><a href="{% url 'recipes-by-category' category.id %}" class="link-button"> {{category.name}}</a></li>
     {% endfor %}
 </ul>
 
-
-</body>
-</html>
+{% endblock %}
+```
