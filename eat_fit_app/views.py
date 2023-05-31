@@ -16,6 +16,7 @@ class IndexView(View):
     def get(self, request):
         return render(request, "index.html")
 
+
 class MainView(View):
     def get(self, request):
         return render(request, "index.html")
@@ -46,8 +47,6 @@ class CategoryListView(View):
         return render(request, "app-categories.html", {"categories": categories})
 
 
-
-
 class RecipeByCategoryView(View):
     def get(self, request, category_id):
         category = Category.objects.get(id=category_id)
@@ -55,12 +54,12 @@ class RecipeByCategoryView(View):
         return render(request, "app-recipes.html", {"recipes": recipes})
 
 
-
 class RecipeByOccasionView(View):
     def get(self, request, occasion_id):
         occasion = Occasion.objects.get(id=occasion_id)
         recipes = Recipe.objects.filter(occasions=occasion)
         return render(request, "app-recipes.html", {"recipes": recipes})
+
 
 class RecipeAddView(LoginRequiredMixin, View):
 
