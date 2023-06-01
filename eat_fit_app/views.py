@@ -78,11 +78,11 @@ class RecipeAddView(LoginRequiredMixin, View):
             return redirect('recipe-details', recipe_id=recipe.id)
 
 
-class RecipeEditView(View):
+class RecipeEditView(LoginRequiredMixin,View):
 
     def get(self, request, recipe_id):
-        if not request.user.is_authenticated:
-            return redirect('login')
+        # if not request.user.is_authenticated:
+        #     return redirect('login')
         recipe = Recipe.objects.get(id=recipe_id)
         form = RecipeAddForm(instance=recipe)
         return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
@@ -97,7 +97,7 @@ class RecipeEditView(View):
             return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
 
 
-class RecipeDeleteView(View):
+class RecipeDeleteView(LoginRequiredMixin,View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
         return render(request, 'app-recipe-delete.html', {'recipe': recipe})

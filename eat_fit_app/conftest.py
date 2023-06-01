@@ -30,3 +30,8 @@ def occasions():
     lst.append(Occasion.objects.create(name='Anniversary'))
     return lst
 
+
+@pytest.fixture
+def user_test():
+    user = User.objects.create_user(username='test_user', password='test_password',email='test@email.com')
+    return user

@@ -34,8 +34,8 @@ class LoginForm(forms.Form):
 
 
 class UserCreateForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput, label='password')
-    password2 = forms.CharField(widget=forms.PasswordInput, label='re-password')
+    password1 = forms.CharField(widget=forms.PasswordInput, label='password1')
+    password2 = forms.CharField(widget=forms.PasswordInput, label='password2')
 
     def clean(self):
         cleaned_data = super().clean()
