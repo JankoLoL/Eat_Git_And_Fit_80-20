@@ -16,7 +16,7 @@ class RecipeAddForm(forms.ModelForm):
 
     class Meta:
         model = Recipe
-        fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
+        fields = ['name', 'description', 'instructions','ingredients', 'category', 'occasion', 'cuisine']
 
 
 class LoginForm(forms.Form):
