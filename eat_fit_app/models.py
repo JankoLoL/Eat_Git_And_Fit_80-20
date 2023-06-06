@@ -6,7 +6,7 @@ from django.db import models
 
 class Recipe(models.Model):
     name = models.CharField(max_length=128)
-    recipe_ingredients = models.TextField()
+    recipe_ingredients = models.ManyToManyField('Ingredients', through='RecipeIngredients', related_name='recipes')
     description = models.TextField()
     instructions = models.TextField(default='')
     created = models.DateTimeField(auto_now_add=True)
@@ -56,13 +56,19 @@ class RecipeIngredients(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    measure = models.CharField(max_length=64)
+    measure = models.ForeignKey('RecipeIngredientsMeasure', on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name_plural = 'Recipe Ingredients'
 
     def __str__(self):
         return f' Recipe: {self.recipe.name}| Ingredient: {self.ingredients.name}| Quantity: {self.quantity}'
+
+
+class RecipeIngredientsMeasure(models.Model):
+    measure = models.CharField(max_length=64)
+
+
 
 
 class Occasion(models.Model):
