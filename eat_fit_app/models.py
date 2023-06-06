@@ -40,6 +40,7 @@ class RecipeCategory(models.Model):
         return self.category.name
 
 
+
 class Ingredients(models.Model):
     name = models.CharField(max_length=128)
     recipe = models.ManyToManyField(Recipe, through='RecipeIngredients', related_name='ingredients')
@@ -67,6 +68,9 @@ class RecipeIngredients(models.Model):
 
 class RecipeIngredientsMeasure(models.Model):
     measure = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.measure
 
 
 
