@@ -8,7 +8,7 @@ If you are registered user you can add your own recipes and save or edit recipes
 Requirements
 ------------
 * Python 3.6
-* Django 2.2.6
-* PostgreSQL 11.5
-* psycopg2 2.8.3
+* Django 
+* PostgreSQL 
+* psycopg2 
 
