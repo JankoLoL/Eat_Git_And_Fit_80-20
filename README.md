@@ -12,3 +12,4 @@ Requirements
 * PostgreSQL 
 * psycopg2 
 
+
