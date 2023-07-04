@@ -31,12 +31,17 @@ class RecipeListView(View):
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
-        ingredients_list = recipe.ingredients.split(",")
+        ingredients_list = RecipeIngredients.objects.filter(recipe=recipe)
+        recipe_category = RecipeCategory.objects.filter(recipe=recipe)
+        recipe_occasion = RecipeOccasion.objects.get(recipe=recipe)
+
         context = {
             'recipe': recipe,
             'ingredients': ingredients_list,
             'description': recipe.description,
             'instructions': recipe.instructions,
+            'category': recipe_category,
+            'occasion': recipe_occasion,
         }
         return render(request, "app-recipe-details.html", context=context)
 

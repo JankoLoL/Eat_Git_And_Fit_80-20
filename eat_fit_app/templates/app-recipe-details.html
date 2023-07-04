@@ -15,6 +15,12 @@
             <li>{{ ingredient }}</li>
         {% endfor %}
     </ul>
+    <p>Category:<br>
+        {{  category | join:", "   }}
+    </p>
+    <p>Occasion:<br>
+
+        {{  occasion | join:", "   }}
     </p>
     <div>
     <button><a href="{% url 'recipe-edit' recipe.id %}" class="navigation-button">Edit Recipe</a></button>

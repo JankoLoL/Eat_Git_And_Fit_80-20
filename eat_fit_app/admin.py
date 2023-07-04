@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Recipe, Category, RecipeCategory, Ingredients, RecipeIngredients, Occasion, RecipeOccasion,\
+from .models import Recipe, Category, RecipeCategory, Ingredients, RecipeIngredients,RecipeIngredientsMeasure, Occasion, RecipeOccasion,\
     Cuisine, RecipeCuisine
 # Register your models here.
 
 
 
-models_to_register = [Recipe, Category, RecipeCategory, Ingredients, RecipeIngredients, Occasion, RecipeOccasion,
+models_to_register = [Recipe, Category, RecipeCategory, Ingredients, RecipeIngredients,RecipeIngredientsMeasure, Occasion, RecipeOccasion,
                       Cuisine, RecipeCuisine]
 
 
