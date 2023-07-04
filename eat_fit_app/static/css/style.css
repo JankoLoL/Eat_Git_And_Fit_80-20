@@ -41,7 +41,7 @@ h2 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-h3{
+h3 {
     font-size: 20px;
     color: greenyellow;
     margin-top: 20px;
@@ -61,7 +61,7 @@ a.button {
     margin: 10px;
 }
 
-.button{
+.button {
     background-color: #32BD03;
     color: white;
     border: 2px solid white;
@@ -73,7 +73,7 @@ a.button {
     transition: 0.3s;
 }
 
-.button-view-recipe{
+.button-view-recipe {
     background-color: #32BD03;
     color: black;
     border: 2px solid white;
@@ -85,7 +85,7 @@ a.button {
     transition: 0.3s;
 }
 
-.link-button{
+.link-button {
     background-color: #32BD03;
     color: black;
     border: 2px solid white;
@@ -112,17 +112,35 @@ a.button {
 }
 
 .navbar-brand:hover {
-    background-color: #45a049; /* Kolor tła po najechaniu */
+    background-color: #45a049;
 }
 
+/* Kolor tła po najechaniu */
+
+/*.navigation-button {*/
+/*    display: inline-block;*/
+/*    padding: 10px 20px;*/
+/*    margin: 10px;*/
+/*    background-color: #32BD03; !* Kolor tła *!*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*    border: 2px solid #32BD03; !* Grubość i kolor ramki *!*/
+/*    border-radius: 4px;*/
+/*    font-size: 16px;*/
+/*    transition: 0.3s;*/
+/*}*/
+
+
+
+
 .recipe-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .recipe-item {
-  width: 300px; /* Lub inna szerokość, którą chcesz ustawić dla przepisów */
-  margin: 10px;
+    width: 300px; /* Lub inna szerokość, którą chcesz ustawić dla przepisów */
+    margin: 10px;
 }
 

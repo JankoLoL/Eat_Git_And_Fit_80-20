@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 import pytest
 from django.test import Client
 from django.urls import reverse
 from eat_fit_app.forms import RecipeAddForm, LoginForm
-from eat_fit_app.models import Recipe, Category, Occasion
+from eat_fit_app.models import Recipe, Category, Occasion, RecipeCategory, RecipeOccasion
 
 
 @pytest.mark.django_db
@@ -22,8 +23,11 @@ def test_recipes_list(recipes):
     response = client.get(url)
     assert response.status_code == 200
     assert response.context['recipes'].count() == len(recipes)
-    for item in recipes:
-        assert item in response.context['recipes']
+    result = [item in response.context['recipes'] for item in recipes]
+    assert all(result)
+
+    # for item in recipes:
+    #     assert item in response.context['recipes']
 
 
 @pytest.mark.django_db
@@ -44,8 +48,8 @@ def test_categories_list(categories):
     response = client.get(url)
     assert response.status_code == 200
     assert response.context['categories'].count() == len(categories)
-    for item in categories:
-        assert item in response.context['categories']
+    result = [item in response.context['categories'] for item in categories]
+    assert all(result)
 
 
 @pytest.mark.django_db
@@ -55,6 +59,10 @@ def test_recipe_by_category(recipes, categories):
     url = reverse('recipes-by-category', args=[category.id])
     response = client.get(url)
     assert response.status_code == 200
+    recipes_by_category = RecipeCategory.objects.filter(category=category)
+    result = [item in response.context['recipes_by_category'] for item in recipes_by_category]
+    assert all(result)
+
 
 
 @pytest.mark.django_db
@@ -64,6 +72,9 @@ def test_recipe_by_occasion(recipes, occasions):
     url = reverse('recipes-by-occasion', args=[occasion.id])
     response = client.get(url)
     assert response.status_code == 200
+    recipes_by_occasion = RecipeOccasion.objects.filter(occasion=occasion)
+    result = [item in response.context['recipes_by_occasion'] for item in recipes_by_occasion]
+    assert all(result)
 
 
 @pytest.mark.django_db
@@ -72,12 +83,6 @@ def test_add_recipe_get():
     url = reverse('recipe-add')
     response = client.get(url)
     assert response.status_code == 302
-
-
-import pytest
-from django.test import Client
-from django.urls import reverse
-from django.core.exceptions import ObjectDoesNotExist
 
 
 @pytest.mark.django_db

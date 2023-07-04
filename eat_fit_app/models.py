@@ -21,6 +21,10 @@ class Category(models.Model):
     description = models.TextField()
     recipes = models.ManyToManyField(Recipe, through='RecipeCategory', related_name='categories')
 
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return self.name
 
@@ -28,6 +32,9 @@ class Category(models.Model):
 class RecipeCategory(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Recipe Categories'
 
     def __str__(self):
         return self.category.name
@@ -37,6 +44,9 @@ class Ingredients(models.Model):
     name = models.CharField(max_length=128)
     recipe = models.ManyToManyField(Recipe, through='RecipeIngredients', related_name='ingredients')
 
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Ingredients'
 
     def __str__(self):
         return self.name
@@ -48,14 +58,20 @@ class RecipeIngredients(models.Model):
     quantity = models.IntegerField()
     measure = models.CharField(max_length=64)
 
+    class Meta:
+        verbose_name_plural = 'Recipe Ingredients'
+
     def __str__(self):
-        return self.ingredients.name
+        return f' Recipe: {self.recipe.name}| Ingredient: {self.ingredients.name}| Quantity: {self.quantity}'
 
 
 class Occasion(models.Model):
     name = models.CharField(max_length=128, default='')
     description = models.TextField(max_length=128)
     recipes = models.ManyToManyField(Recipe, through='RecipeOccasion', related_name='occasions')
+
+    class Meta:
+        verbose_name_plural = 'Occasions'
 
     def __str__(self):
         return self.name
@@ -64,6 +80,9 @@ class Occasion(models.Model):
 class RecipeOccasion(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, null=True)
     occasion = models.ForeignKey(Occasion, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Recipe Occasions'
 
     def __str__(self):
         return self.occasion.name
@@ -74,6 +93,9 @@ class Cuisine(models.Model):
     description = models.TextField()
     recipes = models.ManyToManyField(Recipe, through='RecipeCuisine', related_name='cuisines')
 
+    class Meta:
+        verbose_name_plural = 'Cuisines'
+
     def __str__(self):
         return self.name
 
@@ -81,6 +103,9 @@ class Cuisine(models.Model):
 class RecipeCuisine(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Recipe Cuisines'
 
     def __str__(self):
         return self.cuisine.name

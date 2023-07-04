@@ -31,10 +31,10 @@ class RecipeListView(View):
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
-        # ingredients_list = recipe.ingredients.split(",")
+        ingredients_list = recipe.ingredients.split(",")
         context = {
             'recipe': recipe,
-            # 'ingredients': ingredients_list,
+            'ingredients': ingredients_list,
             'description': recipe.description,
             'instructions': recipe.instructions,
         }
