@@ -20,7 +20,7 @@ from django.contrib.admindocs import views
 from django.urls import path, include, re_path
 from eat_fit_app.views import IndexView, RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
     RecipeEditView, RecipeDeleteView, OccasionListView, LoginView, LogoutView, CreateUserView, MainView, \
-    RecipeByCategoryView, RecipeByOccasionView
+    RecipeByCategoryView, RecipeByOccasionView, CuisineListView, RecipeByCuisineView
 from eat_fit_django_project import settings
 
 urlpatterns = [
@@ -31,10 +31,12 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('recipes/category/<int:category_id>/', RecipeByCategoryView.as_view(), name='recipes-by-category'),
     path('recipes/occasion/<int:occasion_id>/', RecipeByOccasionView.as_view(), name='recipes-by-occasion'),
+    path('recipes/cuisine/<int:cuisine_id>/', RecipeByCuisineView.as_view(), name='recipes-by-cuisine'),
     path('recipe/add/', RecipeAddView.as_view(), name='recipe-add'),
     path('recipe/edit/<int:recipe_id>/', RecipeEditView.as_view(), name='recipe-edit'),
     path('recipe/delete/<int:recipe_id>/', RecipeDeleteView.as_view(), name='recipe-delete'),
     path('occasions/', OccasionListView.as_view(), name='occasions'),
+    path('cuisine/', CuisineListView.as_view(), name='cuisines'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', CreateUserView.as_view(), name='register')
