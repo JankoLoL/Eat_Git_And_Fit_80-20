@@ -65,6 +65,13 @@ class RecipeByOccasionView(View):
         recipes = Recipe.objects.filter(occasions=occasion)
         return render(request, "app-recipes.html", {"recipes": recipes})
 
+class RecipeByCuisineView(View):
+
+    def get(self, request, cuisine_id):
+        cuisine = Cuisine.objects.get(id=cuisine_id)
+        recipes = Recipe.objects.filter(cuisines=cuisine)
+        return render(request, "app-recipes.html", {"recipes": recipes})
+
 
 class RecipeAddView(LoginRequiredMixin, View):
 
@@ -117,6 +124,12 @@ class OccasionListView(View):
     def get(self, request):
         occasions = Occasion.objects.all()
         return render(request, "app-occasions.html", {"occasions": occasions})
+
+
+class CuisineListView(View):
+    def get(self, request):
+        cuisines = Cuisine.objects.all()
+        return render(request, "app-cuisines.html", {"cuisines": cuisines})
 
 
 # ____________LOGIN____________________
