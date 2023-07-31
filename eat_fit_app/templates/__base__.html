@@ -24,7 +24,11 @@
         <a class="navbar-brand" href="{% url 'categories' %}">Categories</a>
         <a class="navbar-brand" href="{% url 'occasions' %}">Occasions</a>
         <a class="navbar-brand" href="{% url 'cuisines' %}">Cuisines</a>
+        {% if not user.is_authenticated %}
         <a class="navbar-brand" href="{% url 'login' %}">Login</a>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
     </nav>
 
         {% block header %}
