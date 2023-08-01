@@ -3,10 +3,22 @@
     Occasions
 {% endblock %}
 {% block content %}
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    {% for occasion in occasions %}
+                        <li class="list-group-item">
+                            <a href="{% url 'recipes-by-occasion' occasion.id %}"
+                               class="link-button">{{ occasion.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
-{% for occasion in occasions %}
-    <li><a href="{% url 'recipes-by-occasion' occasion.id  %}" class="link-button"> {{ occasion.name }}</a></li>
 
-{% endfor %}
+
 {% endblock %}

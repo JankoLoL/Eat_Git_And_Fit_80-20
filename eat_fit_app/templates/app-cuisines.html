@@ -1,12 +1,21 @@
 {% extends '__base__.html' %}
-{% block title %}Cuisines{% endblock title%}
+{% block title %}Cuisines{% endblock title %}
 
 {% block content %}
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    {% for cuisine in cuisines %}
+                        <li class="list-group-item">
+                            <a href="{% url 'recipes-by-cuisine' cuisine.id %}"
+                               class="link-button">{{ cuisine.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 
-  {% for cuisine in cuisines %}
-      <li> <a href="{% url 'recipes-by-cuisine' cuisine.id %}" class="link-button"> {{ cuisine.name }} </a>
-      </li>
 
-  {% endfor %}
-</div>
 {% endblock %}
