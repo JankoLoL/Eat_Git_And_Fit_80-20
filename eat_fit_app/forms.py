@@ -12,7 +12,7 @@ class RecipeAddForm(forms.ModelForm):
     occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.CheckboxSelectMultiple)
     cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.CheckboxSelectMultiple)
     ingredients = forms.ModelMultipleChoiceField(queryset=Ingredients.objects.all(),
-                                                 widget=forms.CheckboxSelectMultiple)
+                                                 widget=forms.SelectMultiple)
 
     class Meta:
         model = Recipe
