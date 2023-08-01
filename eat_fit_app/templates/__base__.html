@@ -15,9 +15,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock title %}</title>
-{% block head %}
+    {% block head %}
 
-{% endblock head %}
+    {% endblock head %}
 
 </head>
 
@@ -25,21 +25,21 @@
 {% include 'navbar.html' %}
 <header class="page-header">
     <nav>
-{#        <a type="button" class="btn btn-secondary" href="{% url 'index' %}">Home</a>#}
-{#        <a type="button" class="btn btn-secondary" href="{% url 'recipes' %}">Recipes</a>#}
-{#        <a type="button" class="btn btn-secondary" href="{% url 'categories' %}">Categories</a>#}
-{#        <a type="button" class="btn btn-secondary" href="{% url 'occasions' %}">Occasions</a>#}
-{#        <a type="button" class="btn btn-secondary" href="{% url 'cuisines' %}">Cuisines</a>#}
-        {% if not user.is_authenticated %}
-        <a type="button" class="btn btn-primary" href="{% url 'login' %}">Login</a>
-        {% else %}
-        <a type="button" class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-        {% endif %}
+        {#        <a type="button" class="btn btn-secondary" href="{% url 'index' %}">Home</a>#}
+        {#        <a type="button" class="btn btn-secondary" href="{% url 'recipes' %}">Recipes</a>#}
+        {#        <a type="button" class="btn btn-secondary" href="{% url 'categories' %}">Categories</a>#}
+        {#        <a type="button" class="btn btn-secondary" href="{% url 'occasions' %}">Occasions</a>#}
+        {#        <a type="button" class="btn btn-secondary" href="{% url 'cuisines' %}">Cuisines</a>#}
+        {#        {% if not user.is_authenticated %}#}
+        {#        <a type="button" class="btn btn-primary" href="{% url 'login' %}">Login</a>#}
+        {#        {% else %}#}
+        {#        <a type="button" class="btn btn-primary" href="{% url 'logout' %}">Logout</a>#}
+        {#        {% endif %}#}
     </nav>
 
-        {% block header %}
+    {% block header %}
 
-        {% endblock header %}
+    {% endblock header %}
 </header>
 
 
@@ -49,8 +49,11 @@
     {% endblock content %}
 </main>
 
-<footer>
-    Created by: Adam Chrzanowski
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
+    <div class="text-center p-4">
+        Author: Adam Chrzanowski
+    </div>
 </footer>
 </body>
 </html>

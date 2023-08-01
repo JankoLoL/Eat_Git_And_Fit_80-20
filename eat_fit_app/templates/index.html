@@ -1,32 +1,30 @@
 {% extends '__base__.html' %}
 {% load static %}
 
+{% block title %}Eat git and fit - Home{% endblock title %}
 {% block head %}
-{#    <style>#}
-{#        body {#}
-{#            background-image: url("{% static 'images/background-pic.png' %}");#}
-{#            background-repeat: no-repeat;#}
-{#            background-size: cover;#}
-{#            background-position: center center;#}
-{#            background-attachment: fixed;#}
-{#        }#}
-{#    </style>#}
+    <style>
+        body {
+            background-image: url("{% static 'images/background-pic.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+    </style>
 {% endblock head %}
 
 {% block header %}
 
-    <h1>Home page</h1>
-    <h2>Explore delicious and healthy recipes, BON APPETIT!</h2>
+    <h2>Home page</h2>
+    <h3>Explore delicious and healthy recipes, BON APPETIT!</h3>
 
 {% endblock header %}
 
 
 
 {% block content %}
-        {% if user.is_authenticated %}
-            <p><strong>Welcome {{ user.username }}</strong></p>
-            <a href="{% url 'logout' %}" class="button">Logout</a>
-        {% endif %}
+
 
 {% endblock content %}
 
