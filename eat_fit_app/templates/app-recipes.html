@@ -1,16 +1,22 @@
 {% extends '__base__.html' %}
-{% block title %}Recipes{% endblock title%}
+{% block title %}Recipes{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'recipe-add' %}" class="button">Add Recipe</a><br>
-<div class="recipe-container">
-  {% for recipe in recipes %}
-    <div class="recipe-item">
-      <h3>{{ recipe.name }}</h3>
-      <p>{{ recipe.description }}</p>
-      <a href="{% url 'recipe-details' recipe.id %}" class="button-view-recipe">View Recipe Details</a>
+    <div class="row">
+        {% for recipe in recipes %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recipe.name }}</h5>
+                        <p class="card-text">{{ recipe.description }}</p>
+                        <a href="{% url 'recipe-details' recipe.id %}" class="btn btn-primary">Go to details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
     </div>
-  {% endfor %}
-</div>
-{% endblock %}
+
+{% endblock content %}
 

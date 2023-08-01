@@ -11,14 +11,25 @@
             background-position: center center;
             background-attachment: fixed;
         }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.4); /* Kolor przezroczystej nakładki */
+            z-index: -1; /* Aby nakładka była pod innymi elementami */
+        }
     </style>
 {% endblock head %}
 
 {% block header %}
-
-    <h2>Home page</h2>
-    <h3>Explore delicious and healthy recipes, BON APPETIT!</h3>
-
+    <div class=" text-center mb-5">
+    <h2 class="text-decoration-underline">Home page</h2>
+        <br>
+    <h3 class="fst-italic">Explore delicious and healthy recipes, BON APPETIT!</h3>
+    </div>
 {% endblock header %}
 
 
@@ -27,5 +38,4 @@
 
 
 {% endblock content %}
-
 
