@@ -6,11 +6,16 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-
-        {{ formset.management_form }}
-        {% for ingredient_form in formset %}
-            {{ ingredient_form.as_p }}
-        {% endfor %}
+        <div id="ingredients-container">
+            {{ formset.management_form }}
+            {% for ingredient_form in formset %}
+                <div class="ingredient-form">
+                    {{ ingredient_form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
+    <p>Test po</p>
+        <button type="button" id="add-ingredient-btn">Add Ingredient</button>
         <button type="submit">Add Recipe</button>
     </form>
 
