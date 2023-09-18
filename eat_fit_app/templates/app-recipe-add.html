@@ -1,11 +1,16 @@
 {% extends '__base__.html' %}
 
 {% block content %}
-<a href="{% url 'index' %}">Back to Main Page</a>
+    <a href="{% url 'index' %}">Back to Main Page</a>
     <h1>Add Recipe</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+
+        {{ formset.management_form }}
+        {% for ingredient_form in formset %}
+            {{ ingredient_form.as_p }}
+        {% endfor %}
         <button type="submit">Add Recipe</button>
     </form>
 

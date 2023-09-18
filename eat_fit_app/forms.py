@@ -2,21 +2,39 @@ from django import forms
 from .models import Recipe, Category, Occasion, Cuisine, Ingredients, RecipeIngredients, RecipeCategory, RecipeOccasion
 
 from django import forms
+from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+
+
+class RecipeIngredientsForm(forms.ModelForm):
+    class Meta:
+        model = RecipeIngredients
+        fields = ['ingredients', 'quantity', 'measure']
+
+
+RecipeIngredientsFormset = inlineformset_factory(
+    Recipe,
+    RecipeIngredients,
+    form=RecipeIngredientsForm,
+    extra=1,
+    widgets={
+        'ingredients': forms.Select,
+        'quantity': forms.NumberInput(attrs={'min': 1}),
+        'measure': forms.Select,
+    }
+)
 
 
 class RecipeAddForm(forms.ModelForm):
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
     occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.CheckboxSelectMultiple)
     cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.CheckboxSelectMultiple)
-    ingredients = forms.ModelMultipleChoiceField(queryset=Ingredients.objects.all(),
-                                                 widget=forms.SelectMultiple)
 
     class Meta:
         model = Recipe
-        fields = ['name', 'description', 'instructions','ingredients', 'category', 'occasion', 'cuisine']
+        fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
 
 
 class LoginForm(forms.Form):

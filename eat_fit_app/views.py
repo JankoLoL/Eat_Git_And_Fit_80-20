@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm
+from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm,RecipeIngredientsFormset
 from eat_fit_app.models import *
 
 
@@ -76,17 +76,23 @@ class RecipeByCuisineView(View):
 class RecipeAddView(LoginRequiredMixin, View):
 
     def get(self, request):
-        # if not request.user.is_authenticated:
-        #     return redirect('login')
         form = RecipeAddForm()
-        return render(request, 'app-recipe-add.html', {'form': form})
+        formset = RecipeIngredientsFormset(queryset=RecipeIngredients.objects.none(), prefix='ingredients')
+        return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
 
     def post(self, request):
         form = RecipeAddForm(request.POST)
-        if form.is_valid():
+        formset = RecipeIngredientsFormset(request.POST, prefix='ingredients')
+
+        if form.is_valid() and formset.is_valid():
             recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.save()
+
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.recipe = recipe
+                instance.save()
             return redirect('recipe-details', recipe_id=recipe.id)
 
 
