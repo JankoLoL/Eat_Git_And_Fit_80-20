@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+/eat_fit_django_project/build
 
 # misc
 .DS_Store
