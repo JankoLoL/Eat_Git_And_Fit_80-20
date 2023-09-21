@@ -1,13 +1,51 @@
 {% extends '__base__.html' %}
 
-{% block content %}
-<a href="{% url 'index' %}">Back to Main Page</a>
-    <h1>Add Recipe</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Recipe</button>
-    </form>
+{{% block content %}
+    <div class="container">
+        <h1>Add Recipe</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form.name.label_tag }} {{ form.name }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.category.label_tag }} {{ form.category }}
+                    {{ form.occasion.label_tag }} {{ form.occasion }}
+                    {{ form.cuisine.label_tag }} {{ form.cuisine }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.description.label_tag }} {{ form.description }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.instructions.label_tag }} {{ form.instructions }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="ingredients-container" data-formset-count="{{ formset.total_form_count }}">
+                    {{ formset.management_form }}
+                    {% for ingredient_form in formset %}
+                        <div class="ingredient-form row">
+                            <div class="col-md-2">{{ ingredient_form.ingredients.label_tag }} {{ ingredient_form.ingredients }}</div>
+                            <div class="col-md-3">{{ ingredient_form.quantity.label_tag }} {{ ingredient_form.quantity }}</div>
+                            <div class="col-md-2">{{ ingredient_form.measure.label_tag }} {{ ingredient_form.measure }}</div>
+                            <button type="button" id="add-ingredient-btn" class="col-md-2">Add Ingredient</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="empty-form" style="display:none;">
+                {{ formset.empty_form.as_p }}
+            </div>
 
+            <button type="submit">Add Recipe</button>
+        </form>
+    </div>
 {% endblock %}
+
+
 

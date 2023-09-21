@@ -1,6 +1,7 @@
 {% extends '__base__.html' %}
 {% load static %}
 
+{% block title %}Eat git and fit - Home{% endblock title %}
 {% block head %}
     <style>
         body {
@@ -10,24 +11,31 @@
             background-position: center center;
             background-attachment: fixed;
         }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.4); /* Kolor przezroczystej nakładki */
+            z-index: -1; /* Aby nakładka była pod innymi elementami */
+        }
     </style>
 {% endblock head %}
 
 {% block header %}
-
-    <h1>Home page</h1>
-    <h2>Explore delicious and healthy recipes, BON APPETIT!</h2>
-
+    <div class=" text-center mb-5">
+    <h2 class="text-decoration-underline">Home page</h2>
+        <br>
+    <h3 class="fst-italic">Explore delicious and healthy recipes, BON APPETIT!</h3>
+    </div>
 {% endblock header %}
 
 
 
 {% block content %}
-        {% if user.is_authenticated %}
-            <p><strong>Welcome {{ user.username }}</strong></p>
-            <a href="{% url 'logout' %}" class="button">Logout</a>
-        {% endif %}
+
 
 {% endblock content %}
-
 
