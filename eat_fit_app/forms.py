@@ -12,6 +12,9 @@ class RecipeIngredientsForm(forms.ModelForm):
     class Meta:
         model = RecipeIngredients
         fields = ['ingredients', 'quantity', 'measure']
+        labels = {
+            'ingredients': 'Ingredient',
+        }
 
 
 RecipeIngredientsFormset = inlineformset_factory(
@@ -28,9 +31,11 @@ RecipeIngredientsFormset = inlineformset_factory(
 
 
 class RecipeAddForm(forms.ModelForm):
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
-    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.CheckboxSelectMultiple)
-    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.CheckboxSelectMultiple)
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.Select)
+    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.Select)
+    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.Select)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
+    instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
 
     class Meta:
         model = Recipe
