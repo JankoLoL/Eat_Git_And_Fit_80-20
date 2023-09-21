@@ -89,6 +89,10 @@ class RecipeAddView(LoginRequiredMixin, View):
             recipe.user = request.user
             recipe.save()
 
+            recipe.occasions.set(form.cleaned_data['occasion'])
+            recipe.categories.set(form.cleaned_data['category'])
+            recipe.cuisines.set(form.cleaned_data['cuisine'])
+
             instances = formset.save(commit=False)
             for instance in instances:
                 instance.recipe = recipe

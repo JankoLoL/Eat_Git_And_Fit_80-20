@@ -6,7 +6,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <div id="ingredients-container">
+        <div id="ingredients-container" data-formset-count="{{ formset.total_form_count }}">
             {{ formset.management_form }}
             {% for ingredient_form in formset %}
                 <div class="ingredient-form">
@@ -14,10 +14,12 @@
                 </div>
             {% endfor %}
         </div>
-    <p>Test po</p>
+        <div id="empty-form" style="display:none;">
+            {{ formset.empty_form.as_p }}
+        </div>
         <button type="button" id="add-ingredient-btn">Add Ingredient</button>
         <button type="submit">Add Recipe</button>
     </form>
-
 {% endblock %}
+
 
