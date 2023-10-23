@@ -23,18 +23,5 @@
 //     });
 // });
 
-document.addEventListener("DOMContentLoaded", function () {
-    let formIdx = parseInt(document.getElementById('ingredients-container').getAttribute('data-formset-count'), 10);
 
-    document.getElementById('add-ingredient-btn').addEventListener('click', function() {
-        let container = document.getElementById('ingredients-container');
-        let newElement = document.getElementById('empty-form').innerHTML.replace(/__prefix__/g, formIdx);
 
-        container.insertAdjacentHTML('beforeend', newElement);
-
-        let totalForms = document.getElementById('id_ingredients-TOTAL_FORMS');
-        totalForms.value = formIdx + 1;
-
-        formIdx++;
-    });
-});
