@@ -14,6 +14,12 @@ class RecipeIngredientsForm(forms.ModelForm):
             'ingredients': 'Ingredient',
         }
 
+    def remove_ingredients(self):
+        ingredient = self.cleaned_data.get('ingredients')
+        if not ingredient:
+            raise forms.ValidationError("Ingredient can not be blank")
+        return ingredient
+
 
 RecipeIngredientsFormset = inlineformset_factory(
     Recipe,

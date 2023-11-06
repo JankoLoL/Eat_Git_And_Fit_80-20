@@ -31,9 +31,16 @@
                 <div id="form-set">
                     {% for ingredient_form in formset %}
                         <div class="ingredient-form row m-2">
-                            <div class="col">{{ ingredient_form.ingredients.label_tag }} {{ ingredient_form.ingredients }}</div>
+                            <div class="col">
+                                {{ ingredient_form.ingredients.label_tag }}
+                                {{ ingredient_form.ingredients }}
+                                {{ ingredient_form.ingredients.errors }}
+                            </div>
                             <div class="col">{{ ingredient_form.quantity.label_tag }} {{ ingredient_form.quantity }}</div>
                             <div class="col">{{ ingredient_form.measure.label_tag }} {{ ingredient_form.measure }}</div>
+                            <div class="col">
+                                <button type="button" class="remove-ingredient-btn">Remove ingredient</button>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>

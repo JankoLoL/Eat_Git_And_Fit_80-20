@@ -20,4 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.log("Button element is not found!");
     }
+     document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-ingredient-btn')) {
+            const ingredientForm = event.target.closest('.ingredient-form');
+            ingredientForm.remove();
+
+            const totalForms = document.querySelector("[name='ingredients-TOTAL_FORMS']");
+            totalForms.value = parseInt(totalForms.value) - 1;
+        }
+    });
 });

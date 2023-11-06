@@ -90,7 +90,7 @@ class RecipeAddView(LoginRequiredMixin, View):
             recipe.user = request.user
             recipe.save()
 
-            # Setting ManyToMany relations after the main object is saved
+
             recipe.occasions.set(form.cleaned_data['occasion'])
             recipe.categories.set(form.cleaned_data['category'])
             recipe.cuisines.set(form.cleaned_data['cuisine'])
