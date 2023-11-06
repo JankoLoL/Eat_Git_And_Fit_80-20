@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const addButton = document.getElementById('add-ingredient-btn');
+    const addButton = document.querySelector('.add-ingredient-btn');
     const formSetContainer = document.getElementById('form-set');
 
     if (addButton) {

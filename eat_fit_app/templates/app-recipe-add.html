@@ -2,55 +2,76 @@
 {% load static %}
 {% block content %}
     <div class="container">
-        <h1>Add Recipe</h1>
+        <h1 class="mb-4">Add Recipe</h1>
         <form method="post" id="recipe-form">
             {% csrf_token %}
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-6">
-                    {{ form.name.label_tag }} {{ form.name }}
+                    <label>{{ form.name.label }}</label>
+                    <input type="text" name="{{ form.name.name }}" class="form-control"
+                           value="{{ form.name.value|default:"" }}">
                 </div>
                 <div class="col-md-6">
-                    {{ form.category.label_tag }} {{ form.category }}
-                    {{ form.occasion.label_tag }} {{ form.occasion }}
-                    {{ form.cuisine.label_tag }} {{ form.cuisine }}
+                    <label>{{ form.category.label }}</label>
+                    <select name="{{ form.category.name }}" class="form-control">
+                        {% for choice in form.category.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label>{{ form.occasion.label }}</label>
+                    <select name="{{ form.occasion.name }}" class="form-control">
+                        {% for choice in form.occasion.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label>{{ form.cuisine.label }}</label>
+                    <select name="{{ form.cuisine.name }}" class="form-control">
+                        {% for choice in form.cuisine.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mb-3">
+                <div class="col-md-6 d-flex flex-column justify-content-center">
                     {{ form.description.label_tag }} {{ form.description }}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6 d-flex flex-column justify-content-center">
                     {{ form.instructions.label_tag }} {{ form.instructions }}
                 </div>
             </div>
-
             <div class="col-md-12" id="ingredients-container">
                 {{ formset.management_form }}
                 <div id="form-set">
                     {% for ingredient_form in formset %}
-                        <div class="ingredient-form row m-2">
-                            <div class="col">
-                                {{ ingredient_form.ingredients.label_tag }}
+                        <div class="ingredient-form row">
+                            <div class="col-md-3">
+                                <label>{{ ingredient_form.ingredients.label }}</label>
                                 {{ ingredient_form.ingredients }}
-                                {{ ingredient_form.ingredients.errors }}
+                                <small class="text-danger">{{ ingredient_form.ingredients.errors }}</small>
                             </div>
-                            <div class="col">{{ ingredient_form.quantity.label_tag }} {{ ingredient_form.quantity }}</div>
-                            <div class="col">{{ ingredient_form.measure.label_tag }} {{ ingredient_form.measure }}</div>
-                            <div class="col">
-                                <button type="button" class="remove-ingredient-btn">Remove ingredient</button>
+                            <div class="col-md-3">
+                                <label>{{ ingredient_form.quantity.label }}</label>
+                                {{ ingredient_form.quantity }}
+                            </div>
+                            <div class="col-md-3">
+                                <label>{{ ingredient_form.measure.label }}</label>
+                                {{ ingredient_form.measure }}
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <button type="button" class="btn btn-primary mr-2 add-ingredient-btn">Add Ingredient
+                                </button>
+                                <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
-
-                <div id="added-ingredients-list">
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-success">Add Recipe</button>
                 </div>
-                <button type="button" id="add-ingredient-btn">Add Ingredient</button>
             </div>
-
-            <button type="submit">Add Recipe</button>
         </form>
     </div>
     <script src="{% static 'js/add_ingredient.js' %}"></script>
