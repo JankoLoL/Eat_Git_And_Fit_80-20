@@ -3,15 +3,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm,RecipeIngredientsFormset
+from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm, RecipeIngredientsFormset
 from eat_fit_app.models import *
+import logging
 
 
-# Create your views here.
+logger = logging.getLogger(__name__)
 
 
-# def home(request):
-#     return render(request, 'home.html')
+
 class IndexView(View):
     def get(self, request):
         return render(request, "index.html")
@@ -65,6 +65,7 @@ class RecipeByOccasionView(View):
         recipes = Recipe.objects.filter(occasions=occasion)
         return render(request, "app-recipes.html", {"recipes": recipes})
 
+
 class RecipeByCuisineView(View):
 
     def get(self, request, cuisine_id):
@@ -89,22 +90,25 @@ class RecipeAddView(LoginRequiredMixin, View):
             recipe.user = request.user
             recipe.save()
 
+            # Setting ManyToMany relations after the main object is saved
             recipe.occasions.set(form.cleaned_data['occasion'])
             recipe.categories.set(form.cleaned_data['category'])
             recipe.cuisines.set(form.cleaned_data['cuisine'])
 
-            instances = formset.save(commit=False)
-            for instance in instances:
+            for instance in formset.save(commit=False):
                 instance.recipe = recipe
                 instance.save()
+
             return redirect('recipe-details', recipe_id=recipe.id)
 
+        logger.error("RecipeAddForm Errors: %s", form.errors)
+        logger.error("RecipeIngredientsFormset Errors: %s", formset.errors)
+        return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
 
-class RecipeEditView(LoginRequiredMixin,View):
+
+class RecipeEditView(LoginRequiredMixin, View):
 
     def get(self, request, recipe_id):
-        # if not request.user.is_authenticated:
-        #     return redirect('login')
         recipe = Recipe.objects.get(id=recipe_id)
         form = RecipeAddForm(instance=recipe)
         return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
@@ -114,12 +118,12 @@ class RecipeEditView(LoginRequiredMixin,View):
         form = RecipeAddForm(request.POST, instance=recipe)
         if form.is_valid():
             form.save()
-            return redirect('recipe-details', recipe_id=recipe_id)
+            return redirect('recipe-details', recipe_id=recipe.id)
         else:
             return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
 
 
-class RecipeDeleteView(LoginRequiredMixin,View):
+class RecipeDeleteView(LoginRequiredMixin, View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
         return render(request, 'app-recipe-delete.html', {'recipe': recipe})

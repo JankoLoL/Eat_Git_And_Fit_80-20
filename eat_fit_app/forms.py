@@ -1,6 +1,4 @@
-from django import forms
 from .models import Recipe, Category, Occasion, Cuisine, Ingredients, RecipeIngredients, RecipeCategory, RecipeOccasion
-
 from django import forms
 from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate
@@ -31,9 +29,9 @@ RecipeIngredientsFormset = inlineformset_factory(
 
 
 class RecipeAddForm(forms.ModelForm):
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.Select)
-    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.Select)
-    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.Select)
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.SelectMultiple)
+    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.SelectMultiple)
+    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.SelectMultiple)
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
     instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
 
