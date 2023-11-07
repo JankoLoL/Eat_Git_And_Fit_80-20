@@ -13,6 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
         newForm.innerHTML = newForm.innerHTML.replace(/__prefix__/g, formNum);
         totalForms.setAttribute('value', parseInt(totalForms.getAttribute('value')) + 1);
 
+        const ingredientSelect = newForm.querySelector('select[name="form-' + formNum + '-ingredient"]');
+        ingredientsData.forEach(function (ingredient) {
+            const option = document.createElement('option');
+            option.value = ingredient.id;
+            option.textContent = ingredient.name;
+            ingredientSelect.appendChild(option);
+        });
+
+        const measureSelect = newForm.querySelector('select[name="form-' + formNum + '-measure"]');
+        measuresData.forEach(function (measure) {
+            const option = document.createElement('option');
+            option.value = measure.id;
+            option.textContent = measure.name;
+            measureSelect.appendChild(option);
+        });
         formContainer.appendChild(newForm);
     }
 
@@ -21,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             let form = e.target.closest('.ingredient-form');
             let totalForms = document.getElementById('id_recipeingredients_set-TOTAL_FORMS');
-            let formNum = document.querySelectorAll('.ingredient-form').length - 1; // Decrement before removing the form
+            let formNum = document.querySelectorAll('.ingredient-form').length - 1;
             form.remove();
             totalForms.setAttribute('value', formNum);
         }

@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import login, logout
 from django.forms import inlineformset_factory
 from .models import Recipe, Ingredients
@@ -111,7 +113,17 @@ class RecipeEditView(LoginRequiredMixin, View):
         recipe = get_object_or_404(Recipe, id=recipe_id)
         form = RecipeAddForm(instance=recipe)
         formset = RecipeIngredientsFormset(instance=recipe)
-        return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
+
+        ingredients = list(Ingredients.objects.values('id', 'name'))
+        measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
+
+        return render(request, 'app-recipe-edit.html', {
+            'form': form,
+            'formset': formset,
+            'recipe': recipe,
+            'ingredients_json': json.dumps(ingredients),
+            'measures_json': json.dumps(measures),
+        })
 
     def post(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
@@ -123,8 +135,17 @@ class RecipeEditView(LoginRequiredMixin, View):
             formset.save()
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
-            return HttpResponse(str(form.errors) + str(formset.errors))
-            # return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
+            ingredients = list(Ingredients.objects.values('id', 'name'))
+            measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
+
+            return render(request, 'app-recipe-edit.html', {
+                'form': form,
+                'formset': formset,
+                'recipe': recipe,
+                'ingredients_json': json.dumps(ingredients),
+                'measures_json': json.dumps(measures),
+                'errors': str(form.errors) + str(formset.errors)
+            })
 
 
 class RecipeDeleteView(LoginRequiredMixin, View):

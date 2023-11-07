@@ -95,8 +95,9 @@
             <div class="row mb-2 ingredient-form">
                 <div class="col-md-3">
                     <label for="id_form-__prefix__-ingredient">Ingredient</label>
-                    <input type="text" id="id_form-__prefix__-ingredient" name="form-__prefix__-ingredient"
-                           class="form-control">
+                    <select id="id_form-__prefix__-ingredient" name="form-__prefix__-ingredient"
+                            class="form-control">
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <label for="id_form-__prefix__-quantity">Quantity</label>
@@ -106,7 +107,6 @@
                 <div class="col-md-3">
                     <label for="id_form-__prefix__-measure">Measure</label>
                     <select id="id_form-__prefix__-measure" name="form-__prefix__-measure" class="form-control">
-                        <!-- Options for measure (add dynamically if needed) -->
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -120,4 +120,8 @@
 {% endblock content %}
 {% block javascript %}
     <script src="{% static 'js/edit_recipe.js' %}"></script>
+    <script type="text/javascript">
+        const ingredientsData = JSON.parse('{{ ingredients_json|safe }}');
+        const measuresData = JSON.parse('{{ measures_json|safe }}');
+    </script>
 {% endblock javascript %}
