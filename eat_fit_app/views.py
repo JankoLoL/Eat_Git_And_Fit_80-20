@@ -123,7 +123,8 @@ class RecipeEditView(LoginRequiredMixin, View):
             formset.save()
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
-            return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
+            return HttpResponse(str(form.errors) + str(formset.errors))
+            # return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
 
 
 class RecipeDeleteView(LoginRequiredMixin, View):

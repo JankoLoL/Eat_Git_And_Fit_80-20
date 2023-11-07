@@ -2,74 +2,101 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Edit Recipe</h1>
-    <form method="post" id="recipe-form" class="needs-validation" novalidate>
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                {{ form.name.label_tag }}
-                {{ form.name }}
-            </div>
-            <div class="col-md-2 mb-3">
-                {{ form.category.label_tag }}
-                {{ form.category }}
-            </div>
-            <div class="col-md-2 mb-3">
-                {{ form.occasion.label_tag }}
-                {{ form.occasion }}
-            </div>
-            <div class="col-md-2 mb-3">
-                {{ form.cuisine.label_tag }}
-                {{ form.cuisine }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                {{ form.description.label_tag }}
-                {{ form.description }}
-            </div>
-            <div class="col-md-6 mb-3">
-                {{ form.instructions.label_tag }}
-                {{ form.instructions }}
-            </div>
-        </div>
-
-        <!-- Ingredients section -->
-        <div id="ingredients-container">
-            {{ formset.management_form }}
-            {% for ingredient_form in formset %}
-                <div class="row mb-2 ingredient-form">
-                    <div class="col-md-3">
-                        {{ ingredient_form.ingredients.label_tag }}
-                        {{ ingredient_form.ingredients }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ ingredient_form.quantity.label_tag }}
-                        {{ ingredient_form.quantity }}
-                    </div>
-                    <div class="col-md-3">
-                        {{ ingredient_form.measure.label_tag }}
-                        {{ ingredient_form.measure }}
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-danger remove-ingredient-btn">Remove ingredient</button>
-                    </div>
+    <div class="container">
+        <h1 class="my-4">Edit Recipe</h1>
+        <form method="post" id="recipe-form" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
                 </div>
-            {% endfor %}
-            <div class="row mb-2">
-                <div class="col-md-12">
-                    <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
+                <div class="col-md-2 mb-3">
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
+                </div>
+                <div class="col-md-2 mb-3">
+                    {{ form.occasion.label_tag }}
+                    {{ form.occasion }}
+                </div>
+                <div class="col-md-2 mb-3">
+                    {{ form.cuisine.label_tag }}
+                    {{ form.cuisine }}
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ form.instructions.label_tag }}
+                    {{ form.instructions }}
+                </div>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+            <!-- Ingredients section -->
+            <div id="ingredients-container">
+                {{ formset.management_form }}
+                {% for ingredient_form in formset %}
+                    <div class="row mb-2 ingredient-form">
+                        {{ ingredient_form.id.as_hidden }}
+                        <div class="col-md-3">
+                            {{ ingredient_form.ingredients.label_tag }}
+                            {{ ingredient_form.ingredients }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ ingredient_form.quantity.label_tag }}
+                            {{ ingredient_form.quantity }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ ingredient_form.measure.label_tag }}
+                            {{ ingredient_form.measure }}
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger remove-ingredient-btn">Remove ingredient
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+
+        <template id="ingredient-form-template">
+            <div class="row mb-2 ingredient-form">
+                <div class="col-md-3">
+                    <label for="id_form-__prefix__-ingredient">Ingredient</label>
+                    <input type="text" id="id_form-__prefix__-ingredient" name="form-__prefix__-ingredient"
+                           class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label for="id_form-__prefix__-quantity">Quantity</label>
+                    <input type="number" id="id_form-__prefix__-quantity" name="form-__prefix__-quantity"
+                           class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="id_form-__prefix__-measure">Measure</label>
+                    <select id="id_form-__prefix__-measure" name="form-__prefix__-measure" class="form-control">
+                        <!-- Options for measure (add dynamically if needed) -->
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>
+                </div>
+            </div>
+        </template>
+
+    </div>
 
 {% endblock content %}
 {% block javascript %}
-<script src="{% static 'js/edit_recipe.js' %}"></script>
-{%  endblock javascript %}
+    <script src="{% static 'js/edit_recipe.js' %}"></script>
+{% endblock javascript %}
