@@ -1,15 +1,15 @@
 from django.contrib.auth import login, logout
+from django.forms import inlineformset_factory
+from .models import Recipe, Ingredients
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm, RecipeIngredientsFormset
+from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm, RecipeIngredientsFormset, RecipeIngredientsForm
 from eat_fit_app.models import *
 import logging
 
-
 logger = logging.getLogger(__name__)
-
 
 
 class IndexView(View):
@@ -90,7 +90,6 @@ class RecipeAddView(LoginRequiredMixin, View):
             recipe.user = request.user
             recipe.save()
 
-
             recipe.occasions.set(form.cleaned_data['occasion'])
             recipe.categories.set(form.cleaned_data['category'])
             recipe.cuisines.set(form.cleaned_data['cuisine'])
@@ -109,18 +108,22 @@ class RecipeAddView(LoginRequiredMixin, View):
 class RecipeEditView(LoginRequiredMixin, View):
 
     def get(self, request, recipe_id):
-        recipe = Recipe.objects.get(id=recipe_id)
+        recipe = get_object_or_404(Recipe, id=recipe_id)
         form = RecipeAddForm(instance=recipe)
-        return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
+        formset = RecipeIngredientsFormset(instance=recipe)
+        return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
 
     def post(self, request, recipe_id):
-        recipe = Recipe.objects.get(id=recipe_id)
+        recipe = get_object_or_404(Recipe, id=recipe_id)
         form = RecipeAddForm(request.POST, instance=recipe)
-        if form.is_valid():
+        formset = RecipeIngredientsFormset(request.POST, instance=recipe)
+
+        if form.is_valid() and formset.is_valid():
             form.save()
+            formset.save()
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
-            return render(request, 'app-recipe-edit.html', {'form': form, 'recipe': recipe})
+            return render(request, 'app-recipe-edit.html', {'form': form, 'formset': formset, 'recipe': recipe})
 
 
 class RecipeDeleteView(LoginRequiredMixin, View):

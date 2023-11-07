@@ -1,16 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Recipe</title>
-</head>
-<body>
-<h1>Edit Recipe</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-    <a href="{% url 'index' %}">Cancel</a>
-</form>
-</body>
-</html>
+{% extends '__base__.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Edit Recipe</h1>
+    <form method="post" id="recipe-form" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="col-md-2 mb-3">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+            </div>
+            <div class="col-md-2 mb-3">
+                {{ form.occasion.label_tag }}
+                {{ form.occasion }}
+            </div>
+            <div class="col-md-2 mb-3">
+                {{ form.cuisine.label_tag }}
+                {{ form.cuisine }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.instructions.label_tag }}
+                {{ form.instructions }}
+            </div>
+        </div>
+
+        <!-- Ingredients section -->
+        <div id="ingredients-container">
+            {{ formset.management_form }}
+            {% for ingredient_form in formset %}
+                <div class="row mb-2 ingredient-form">
+                    <div class="col-md-3">
+                        {{ ingredient_form.ingredients.label_tag }}
+                        {{ ingredient_form.ingredients }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ ingredient_form.quantity.label_tag }}
+                        {{ ingredient_form.quantity }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ ingredient_form.measure.label_tag }}
+                        {{ ingredient_form.measure }}
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-danger remove-ingredient-btn">Remove ingredient</button>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock content %}
+{% block javascript %}
+<script src="{% static 'js/edit_recipe.js' %}"></script>
+{%  endblock javascript %}
