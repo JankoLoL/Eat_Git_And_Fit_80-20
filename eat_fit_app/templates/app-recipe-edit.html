@@ -13,15 +13,36 @@
                 </div>
                 <div class="col-md-2 mb-3">
                     {{ form.category.label_tag }}
-                    {{ form.category }}
+                    <select name="category" id="id_category" class="form-control">
+                        {% for category in form.category.field.queryset %}
+                            <option value="{{ category.pk }}"
+                                    {% if form.instance.category == category %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-3">
                     {{ form.occasion.label_tag }}
-                    {{ form.occasion }}
+                    <select name="occasion" id="id_occasion" class="form-control">
+                        {% for occasion in form.occasion.field.queryset %}
+                            <option value="{{ occasion.pk }}"
+                                    {% if form.instance.occasion == occasion %}selected{% endif %}>
+                                {{ occasion.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-3">
                     {{ form.cuisine.label_tag }}
-                    {{ form.cuisine }}
+                    <select name="cuisine" id="id_cuisine" class="form-control">
+                        {% for cuisine in form.cuisine.field.queryset %}
+                            <option value="{{ cuisine.pk }}"
+                                    {% if form.instance.cuisine == cuisine %}selected{% endif %}>
+                                {{ cuisine.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="row">
