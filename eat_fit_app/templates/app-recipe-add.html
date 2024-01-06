@@ -1,88 +1,133 @@
 {% extends '__base__.html' %}
 {% load static %}
-{% block head %}
-<script type="text/javascript" src="{% static "js/main.js" %}" ></script>
-{% endblock head %}
 
+{#{% load static %}#}
+{#{% block head %}#}
+{#{% endblock head %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container">#}
+{#    <h1 class="mb-4">Add Recipe</h1>#}
+{#    <form method="post" id="recipe-form">#}
+{#        {% csrf_token %}#}
+{#        <div class="row mb-3">#}
+{#            <div class="col-md-6">#}
+{#                <div class="form-group">#}
+{#                    {{ form.name.label_tag }}#}
+{#                    <input type="text" name="{{ form.name.name }}" class="form-control" id="{{ form.name.id }}"#}
+{#                           value="{{ form.name.value|default:"" }}">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-6">#}
+{#                <div class="form-group">#}
+{#                    {{ form.category.label_tag }}#}
+{#                    <select name="{{ form.category.name }}" class="form-control" id="{{ form.category.id }}">#}
+{#                        {% for choice in form.category.field.choices %}#}
+{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+{##}
+{#                <div class="form-group">#}
+{#                    {{ form.occasion.label_tag }}#}
+{#                    <select name="{{ form.occasion.name }}" class="form-control" id="{{ form.occasion.id }}">#}
+{#                        {% for choice in form.occasion.field.choices %}#}
+{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+{##}
+{#                <div class="form-group">#}
+{#                    {{ form.cuisine.label_tag }}#}
+{#                    <select name="{{ form.cuisine.name }}" class="form-control" id="{{ form.cuisine.id }}">#}
+{#                        {% for choice in form.cuisine.field.choices %}#}
+{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row mb-3">#}
+{#            <div class="col-md-6">#}
+{#                <div class="form-group">#}
+{#                    {{ form.description.label_tag }}#}
+{#                    {{ form.description }}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-6">#}
+{#                <div class="form-group">#}
+{#                    {{ form.instructions.label_tag }}#}
+{#                    {{ form.instructions }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="col-md-12" id="ingredients-container">#}
+{#            {{ formset.management_form }}#}
+{#            <div id="form-set">#}
+{#                {% for ingredient_form in formset %}#}
+{#                    <div class="ingredient-form row">#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="form-group">#}
+{#                                {{ ingredient_form.ingredients.label_tag }}#}
+{#                                {{ ingredient_form.ingredients }}#}
+{#                                <small class="text-danger">{{ ingredient_form.ingredients.errors }}</small>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="form-group">#}
+{#                                {{ ingredient_form.quantity.label_tag }}#}
+{#                                {{ ingredient_form.quantity }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="form-group">#}
+{#                                {{ ingredient_form.measure.label_tag }}#}
+{#                                {{ ingredient_form.measure }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3 d-flex align-items-center">#}
+{#                            <button type="button" class="btn btn-primary mr-2 add-ingredient-btn">Add Ingredient#}
+{#                            </button>#}
+{#                            <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#            <div class="mt-3">#}
+{#                <button type="submit" class="btn btn-success">Add Recipe</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </form>#}
+{#</div>#}
+{#{% endblock content %}#}
+{#{% block javascript %}#}
+{#    <script src="{% static 'js/add_ingredient.js' %}"></script>#}
+{#{% endblock javascript %}#}
+
+
+<!-- recipe_add.html -->
 {% block content %}
-    <div id="root">
-
-    </div>
     <div class="container">
-        <h1 class="mb-4">Add Recipe</h1>
-        <form method="post" id="recipe-form">
-            {% csrf_token %}
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label>{{ form.name.label }}</label>
-                    <input type="text" name="{{ form.name.name }}" class="form-control"
-                           value="{{ form.name.value|default:"" }}">
-                </div>
-                <div class="col-md-6">
-                    <label>{{ form.category.label }}</label>
-                    <select name="{{ form.category.name }}" class="form-control">
-                        {% for choice in form.category.field.choices %}
-                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                        {% endfor %}
-                    </select>
+    <h1>Add Recipe</h1>
+    <form method="post" id="recipe-form">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-                    <label>{{ form.occasion.label }}</label>
-                    <select name="{{ form.occasion.name }}" class="form-control">
-                        {% for choice in form.occasion.field.choices %}
-                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                        {% endfor %}
-                    </select>
+        {{ formset.management_form }}
+        <div id="form-set">
+            {% for form in formset %}
+                <div class="ingredient-form">
+                    {{ form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
 
-                    <label>{{ form.cuisine.label }}</label>
-                    <select name="{{ form.cuisine.name }}" class="form-control">
-                        {% for choice in form.cuisine.field.choices %}
-                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6 d-flex flex-column justify-content-center">
-                    {{ form.description.label_tag }} {{ form.description }}
-                </div>
-                <div class="col-md-6 d-flex flex-column justify-content-center">
-                    {{ form.instructions.label_tag }} {{ form.instructions }}
-                </div>
-            </div>
-            <div class="col-md-12" id="ingredients-container">
-                {{ formset.management_form }}
-                <div id="form-set">
-                    {% for ingredient_form in formset %}
-                        <div class="ingredient-form row">
-                            <div class="col-md-3">
-                                <label>{{ ingredient_form.ingredients.label }}</label>
-                                {{ ingredient_form.ingredients }}
-                                <small class="text-danger">{{ ingredient_form.ingredients.errors }}</small>
-                            </div>
-                            <div class="col-md-3">
-                                <label>{{ ingredient_form.quantity.label }}</label>
-                                {{ ingredient_form.quantity }}
-                            </div>
-                            <div class="col-md-3">
-                                <label>{{ ingredient_form.measure.label }}</label>
-                                {{ ingredient_form.measure }}
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <button type="button" class="btn btn-primary mr-2 add-ingredient-btn">Add Ingredient
-                                </button>
-                                <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-success">Add Recipe</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        <button type="button" id="add-more">Add More Ingredients</button>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
 {% endblock content %}
 {% block javascript %}
-    <script src="{% static 'js/add_ingredient.js' %}"></script>
+     <script src="{% static 'js/add_ingredient.js' %}"></script>
 {% endblock javascript %}
-

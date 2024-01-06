@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eat_fit_app.forms import RecipeAddForm, LoginForm, UserCreateForm, RecipeIngredientsFormset, RecipeIngredientsForm
+from eat_fit_app.forms import LoginForm, UserCreateForm, RecipeForm, RecipeIngredientFormSet
 from eat_fit_app.models import *
 import logging
 
@@ -76,35 +76,60 @@ class RecipeByCuisineView(View):
         return render(request, "app-recipes.html", {"recipes": recipes})
 
 
-class RecipeAddView(LoginRequiredMixin, View):
-
+class RecipeAddView(View):
     def get(self, request):
-        form = RecipeAddForm()
-        formset = RecipeIngredientsFormset(queryset=RecipeIngredients.objects.none(), prefix='ingredients')
+        form = RecipeForm()
+        formset = RecipeIngredientFormSet()
         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
 
     def post(self, request):
-        form = RecipeAddForm(request.POST)
-        formset = RecipeIngredientsFormset(request.POST, prefix='ingredients')
+        form = RecipeForm(request.POST)
+        formset = RecipeIngredientFormSet(request.POST)
 
         if form.is_valid() and formset.is_valid():
-            recipe = form.save(commit=False)
+            recipe = form.save()
+            formset.instance = recipe
+            formset.save()
             recipe.user = request.user
             recipe.save()
 
             recipe.occasions.set(form.cleaned_data['occasion'])
             recipe.categories.set(form.cleaned_data['category'])
             recipe.cuisines.set(form.cleaned_data['cuisine'])
-
-            for instance in formset.save(commit=False):
-                instance.recipe = recipe
-                instance.save()
-
             return redirect('recipe-details', recipe_id=recipe.id)
 
-        logger.error("RecipeAddForm Errors: %s", form.errors)
-        logger.error("RecipeIngredientsFormset Errors: %s", formset.errors)
-        return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
+    # return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
+
+
+# class RecipeAddView(LoginRequiredMixin, View):
+#
+#     def get(self, request):
+#         form = RecipeAddForm()
+#         formset = RecipeIngredientsFormset(queryset=RecipeIngredients.objects.none(), prefix='ingredients')
+#         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
+#
+#     def post(self, request):
+#         form = RecipeAddForm(request.POST)
+#         formset = RecipeIngredientsFormset(request.POST, prefix='ingredients')
+#
+#         if form.is_valid() and formset.is_valid():
+#             recipe = form.save(commit=False)
+#             recipe.user = request.user
+#             recipe.save()
+#
+#             recipe.occasions.set(form.cleaned_data['occasion'])
+#             recipe.categories.set(form.cleaned_data['category'])
+#             recipe.cuisines.set(form.cleaned_data['cuisine'])
+#
+#             for instance in formset.save(commit=False):
+#                 instance.recipe = recipe
+#                 instance.save()
+#
+#             return redirect('recipe-details', recipe_id=recipe.id)
+#
+#         logger.error("RecipeAddForm Errors: %s", form.errors)
+#         logger.error("RecipeIngredientsFormset Errors: %s", formset.errors)
+#         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
 
 
 class RecipeEditView(LoginRequiredMixin, View):

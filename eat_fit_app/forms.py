@@ -6,35 +6,47 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 
-class RecipeIngredientsForm(forms.ModelForm):
-    class Meta:
-        model = RecipeIngredients
-        fields = ['ingredients', 'quantity', 'measure']
-        labels = {
-            'ingredients': 'Ingredient',
-        }
+# class RecipeIngredientsForm(forms.ModelForm):
+#     class Meta:
+#         model = RecipeIngredients
+#         fields = ['ingredients', 'quantity', 'measure']
+#         labels = {
+#             'ingredients': 'Ingredient',
+#         }
+#
+#     def remove_ingredients(self):
+#         ingredient = self.cleaned_data.get('ingredients')
+#         if not ingredient:
+#             raise forms.ValidationError("Ingredient can not be blank")
+#         return ingredient
+#
+#
+# RecipeIngredientsFormset = inlineformset_factory(
+#     Recipe,
+#     RecipeIngredients,
+#     form=RecipeIngredientsForm,
+#     extra=1,
+#     widgets={
+#         'ingredients': forms.Select,
+#         'quantity': forms.NumberInput(attrs={'min': 1}),
+#         'measure': forms.Select,
+#     }
+# )
+#
+#
+# class RecipeAddForm(forms.ModelForm):
+#     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.SelectMultiple)
+#     occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.SelectMultiple)
+#     cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.SelectMultiple)
+#     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
+#     instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
+#
+#     class Meta:
+#         model = Recipe
+#         fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
 
-    def remove_ingredients(self):
-        ingredient = self.cleaned_data.get('ingredients')
-        if not ingredient:
-            raise forms.ValidationError("Ingredient can not be blank")
-        return ingredient
 
-
-RecipeIngredientsFormset = inlineformset_factory(
-    Recipe,
-    RecipeIngredients,
-    form=RecipeIngredientsForm,
-    extra=1,
-    widgets={
-        'ingredients': forms.Select,
-        'quantity': forms.NumberInput(attrs={'min': 1}),
-        'measure': forms.Select,
-    }
-)
-
-
-class RecipeAddForm(forms.ModelForm):
+class RecipeForm(forms.ModelForm):
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.SelectMultiple)
     occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.SelectMultiple)
     cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.SelectMultiple)
@@ -44,6 +56,16 @@ class RecipeAddForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
+
+
+class RecipeIngredientForm(forms.ModelForm):
+    class Meta:
+        model = RecipeIngredients
+        fields = ['ingredients', 'quantity', 'measure']
+
+
+# Adjust 'extra=1' as needed for the number of initial forms
+RecipeIngredientFormSet = inlineformset_factory(Recipe, RecipeIngredients, form=RecipeIngredientForm, extra=1)
 
 
 class LoginForm(forms.Form):
