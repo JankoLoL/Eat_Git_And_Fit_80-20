@@ -1,9 +1,6 @@
 import json
 
 from django.contrib.auth import login, logout
-from django.forms import inlineformset_factory
-from .models import Recipe, Ingredients
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin

@@ -47,21 +47,37 @@ from django.core.exceptions import ValidationError
 
 
 class RecipeForm(forms.ModelForm):
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.SelectMultiple)
-    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.SelectMultiple)
-    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.SelectMultiple)
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
+                                              widget=forms.Select(attrs={'class': 'form-control'}))
+    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(),
+                                              widget=forms.Select(attrs={'class': 'form-control'}))
+    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(),
+                                             widget=forms.Select(attrs={'class': 'form-control'}))
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
     instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
 
     class Meta:
         model = Recipe
         fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
+            'instructions': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
+            'category': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'occasion': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'cuisine': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
 
 
 class RecipeIngredientForm(forms.ModelForm):
     class Meta:
         model = RecipeIngredients
         fields = ['ingredients', 'quantity', 'measure']
+        widgets = {
+            'ingredients': forms.Select(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+            'measure': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 
 # Adjust 'extra=1' as needed for the number of initial forms

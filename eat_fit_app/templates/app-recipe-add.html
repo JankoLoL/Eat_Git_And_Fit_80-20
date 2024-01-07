@@ -1,133 +1,77 @@
 {% extends '__base__.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
-{#{% load static %}#}
-{#{% block head %}#}
-{#{% endblock head %}#}
-{##}
-{#{% block content %}#}
-{#<div class="container">#}
-{#    <h1 class="mb-4">Add Recipe</h1>#}
-{#    <form method="post" id="recipe-form">#}
-{#        {% csrf_token %}#}
-{#        <div class="row mb-3">#}
-{#            <div class="col-md-6">#}
-{#                <div class="form-group">#}
-{#                    {{ form.name.label_tag }}#}
-{#                    <input type="text" name="{{ form.name.name }}" class="form-control" id="{{ form.name.id }}"#}
-{#                           value="{{ form.name.value|default:"" }}">#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-md-6">#}
-{#                <div class="form-group">#}
-{#                    {{ form.category.label_tag }}#}
-{#                    <select name="{{ form.category.name }}" class="form-control" id="{{ form.category.id }}">#}
-{#                        {% for choice in form.category.field.choices %}#}
-{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </div>#}
-{##}
-{#                <div class="form-group">#}
-{#                    {{ form.occasion.label_tag }}#}
-{#                    <select name="{{ form.occasion.name }}" class="form-control" id="{{ form.occasion.id }}">#}
-{#                        {% for choice in form.occasion.field.choices %}#}
-{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </div>#}
-{##}
-{#                <div class="form-group">#}
-{#                    {{ form.cuisine.label_tag }}#}
-{#                    <select name="{{ form.cuisine.name }}" class="form-control" id="{{ form.cuisine.id }}">#}
-{#                        {% for choice in form.cuisine.field.choices %}#}
-{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="row mb-3">#}
-{#            <div class="col-md-6">#}
-{#                <div class="form-group">#}
-{#                    {{ form.description.label_tag }}#}
-{#                    {{ form.description }}#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-md-6">#}
-{#                <div class="form-group">#}
-{#                    {{ form.instructions.label_tag }}#}
-{#                    {{ form.instructions }}#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="col-md-12" id="ingredients-container">#}
-{#            {{ formset.management_form }}#}
-{#            <div id="form-set">#}
-{#                {% for ingredient_form in formset %}#}
-{#                    <div class="ingredient-form row">#}
-{#                        <div class="col-md-3">#}
-{#                            <div class="form-group">#}
-{#                                {{ ingredient_form.ingredients.label_tag }}#}
-{#                                {{ ingredient_form.ingredients }}#}
-{#                                <small class="text-danger">{{ ingredient_form.ingredients.errors }}</small>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="col-md-3">#}
-{#                            <div class="form-group">#}
-{#                                {{ ingredient_form.quantity.label_tag }}#}
-{#                                {{ ingredient_form.quantity }}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="col-md-3">#}
-{#                            <div class="form-group">#}
-{#                                {{ ingredient_form.measure.label_tag }}#}
-{#                                {{ ingredient_form.measure }}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="col-md-3 d-flex align-items-center">#}
-{#                            <button type="button" class="btn btn-primary mr-2 add-ingredient-btn">Add Ingredient#}
-{#                            </button>#}
-{#                            <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#            <div class="mt-3">#}
-{#                <button type="submit" class="btn btn-success">Add Recipe</button>#}
-{#            </div>#}
-{#        </div>#}
-{#    </form>#}
-{#</div>#}
-{#{% endblock content %}#}
-{#{% block javascript %}#}
-{#    <script src="{% static 'js/add_ingredient.js' %}"></script>#}
-{#{% endblock javascript %}#}
-
-
-<!-- recipe_add.html -->
 {% block content %}
-    <div class="container">
-    <h1>Add Recipe</h1>
-    <form method="post" id="recipe-form">
+<div class="container mt-4">
+    <h1 class="mb-4">Add Recipe</h1>
+    <form method="post" id="recipe-form" class="needs-validation" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
 
-        {{ formset.management_form }}
-        <div id="form-set">
+        <div class="row">
+            <!-- Left Column for name, description, and instructions -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    {{ form.name.label_tag }}
+                    {{ form.name|add_class:"form-control" }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.description.label_tag }}
+                    {{ form.description|add_class:"form-control" }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.instructions.label_tag }}
+                    {{ form.instructions|add_class:"form-control" }}
+                </div>
+            </div>
+
+            <!-- Right Column for category, occasion, and cuisine -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    {{ form.category.label_tag }}
+                    {{ form.category|add_class:"form-select" }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.occasion.label_tag }}
+                    {{ form.occasion|add_class:"form-select" }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.cuisine.label_tag }}
+                    {{ form.cuisine|add_class:"form-select" }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingredients Formset -->
+        <div id="form-set" class="mt-3">
             {% for form in formset %}
-                <div class="ingredient-form">
-                    {{ form.as_p }}
+                <div class="ingredient-form row mb-3">
+                    <div class="col-md-4">
+                        {{ form.ingredients.label_tag }}
+                        {{ form.ingredients|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.quantity.label_tag }}
+                        {{ form.quantity|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.measure.label_tag }}
+                        {{ form.measure|add_class:"form-control" }}
+                    </div>
                 </div>
             {% endfor %}
         </div>
 
-        <button type="button" id="add-more">Add More Ingredients</button>
-        <input type="submit" value="Submit">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <button type="button" id="add-more" class="btn btn-primary me-2">Add More Ingredients</button>
+                <input type="submit" value="Submit" class="btn btn-success">
+            </div>
+        </div>
     </form>
 </div>
-
 {% endblock content %}
+
 {% block javascript %}
-     <script src="{% static 'js/add_ingredient.js' %}"></script>
+    <script src="{% static 'js/add_ingredient.js' %}"></script>
 {% endblock javascript %}
