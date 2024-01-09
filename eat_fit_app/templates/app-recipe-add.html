@@ -9,7 +9,6 @@
         {% csrf_token %}
 
         <div class="row">
-            <!-- Left Column for name, description, and instructions -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     {{ form.name.label_tag }}
@@ -25,7 +24,6 @@
                 </div>
             </div>
 
-            <!-- Right Column for category, occasion, and cuisine -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     {{ form.category.label_tag }}

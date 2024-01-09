@@ -11,11 +11,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class IndexView(View):
-    def get(self, request):
-        return render(request, "index.html")
-
-
 class MainView(View):
     def get(self, request):
         return render(request, "index.html")
@@ -133,8 +128,8 @@ class RecipeEditView(LoginRequiredMixin, View):
 
     def get(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        form = RecipeAddForm(instance=recipe)
-        formset = RecipeIngredientsFormset(instance=recipe)
+        form = RecipeForm(instance=recipe)
+        formset = RecipeIngredientFormSet(instance=recipe)
 
         ingredients = list(Ingredients.objects.values('id', 'name'))
         measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
@@ -149,8 +144,8 @@ class RecipeEditView(LoginRequiredMixin, View):
 
     def post(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        form = RecipeAddForm(request.POST, instance=recipe)
-        formset = RecipeIngredientsFormset(request.POST, instance=recipe)
+        form = RecipeForm(request.POST, instance=recipe)
+        formset = RecipeIngredientFormSet(request.POST, instance=recipe)
 
         if form.is_valid() and formset.is_valid():
             form.save()

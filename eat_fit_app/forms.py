@@ -80,7 +80,6 @@ class RecipeIngredientForm(forms.ModelForm):
         }
 
 
-# Adjust 'extra=1' as needed for the number of initial forms
 RecipeIngredientFormSet = inlineformset_factory(Recipe, RecipeIngredients, form=RecipeIngredientForm, extra=1)
 
 

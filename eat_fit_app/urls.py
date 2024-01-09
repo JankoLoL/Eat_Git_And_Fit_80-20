@@ -15,8 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls.static import static
-from django.contrib import admin
-from django.contrib.admindocs import views
 from django.urls import path, include, re_path
 from eat_fit_app.views import IndexView, RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
     RecipeEditView, RecipeDeleteView, OccasionListView, LoginView, LogoutView, CreateUserView, MainView, \
