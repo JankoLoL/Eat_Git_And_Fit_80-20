@@ -26,5 +26,6 @@
     <button><a href="{% url 'recipe-edit' recipe.id %}" class="navigation-button">Edit Recipe</a></button>
     <button><a href="{% url 'recipes' %}" class="navigation-button">Back to Recipes</a></button>
     <button><a href="{% url 'recipe-delete' recipe.id %}" class="navigation-button">Delete Recipe</a></button>
+    <a href="{% url 'recipe-image-upload' recipe_id=recipe.id %}">Upload Image</a>
     </div>
 {% endblock content %}

@@ -64,12 +64,16 @@
             <div class="col-md-12">
                 <button type="button" id="add-more" class="btn btn-primary me-2">Add More Ingredients</button>
                 <input type="submit" value="Submit" class="btn btn-success">
+{#                 <a href="{% url "recipe-image-upload" recipe_id=recipe_id %}" class="btn btn-info">Add Image</a>#}
             </div>
         </div>
     </form>
 </div>
 {% endblock content %}
 
+
+
 {% block javascript %}
-    <script src="{% static 'js/add_ingredient.js' %}"></script>
+<script src="{% static 'js/add_ingredient.js' %}"></script>
 {% endblock javascript %}
+

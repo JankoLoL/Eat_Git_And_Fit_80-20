@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.urls import path, include, re_path
-from eat_fit_app.views import IndexView, RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
+from eat_fit_app.views import RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
     RecipeEditView, RecipeDeleteView, OccasionListView, LoginView, LogoutView, CreateUserView, MainView, \
     RecipeByCategoryView, RecipeByOccasionView, CuisineListView, RecipeByCuisineView
 from eat_fit_django_project import settings
