@@ -5,8 +5,8 @@
     <div class="row">
         {% for recipe in recipes %}
             <div class="col-md-4 mb-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                <div class="card"
+                     style="width: 18rem; height: 200px; {% if recipe.main_image_url %}background: url('{{ recipe.main_image_url }}') center/cover no-repeat;{% endif %}">
                     <div class="card-body">
                         <h5 class="card-title">{{ recipe.name }}</h5>
                         <p class="card-text">{{ recipe.description }}</p>
@@ -15,8 +15,5 @@
                 </div>
             </div>
         {% endfor %}
-
     </div>
-
 {% endblock content %}
-

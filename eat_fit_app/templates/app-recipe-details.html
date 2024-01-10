@@ -1,10 +1,24 @@
 {% extends '__base__.html' %}
 {% load static %}
+{% load widget_tweaks %}
+
 {% block title %}Recipe details{% endblock title %}
 
 {% block content %}
     <div class="container mt-4">
     <h1 class="mb-4">{{ recipe.name }}</h1>
+
+{#    {% if main_image %}#}
+{#        <div class="card mb-4" style="background: url('{{ main_image.image_file.url }}') center/cover no-repeat;">#}
+{#            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.5);">#}
+{#                <!-- Adjust the rgba values for the desired transparency -->#}
+{#                <h5 class="card-title">Main Image</h5>#}
+{#                <p class="card-text">{{ main_image.description }}</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+
 
     <div class="card mb-4">
         <div class="card-body">
@@ -66,7 +80,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            {{ image.type|title }}
+                            {{ image.name|title }}
                         </div>
                         <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
                         <div class="card-body">

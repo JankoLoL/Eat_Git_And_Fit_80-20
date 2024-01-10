@@ -17,14 +17,21 @@ class MainView(View):
 
 
 class RecipeListView(View):
+
     def get(self, request):
-        recipes = Recipe.objects.all()
+        recipes = Recipe.objects.prefetch_related('recipe_images').all()
+
+        for recipe in recipes:
+            main_image = recipe.recipe_images.filter(type='main_image').first()
+            recipe.main_image_url = main_image.image_file.url if main_image else None
+
         return render(request, "app-recipes.html", {"recipes": recipes})
 
 
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
+        # main_image = recipe.recipe_images.filter(type='main_image').first()
 
         context = {
             'recipe': recipe,
@@ -32,6 +39,7 @@ class RecipeDetailsView(View):
             'categories': recipe.categories.all(),
             'occasions': recipe.occasions.all(),
             'cuisines': recipe.cuisines.all(),
+            # 'main_image': main_image,
         }
         return render(request, "app-recipe-details.html", context)
 
