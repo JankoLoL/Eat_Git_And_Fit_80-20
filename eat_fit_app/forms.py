@@ -6,53 +6,19 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 
-# class RecipeIngredientsForm(forms.ModelForm):
-#     class Meta:
-#         model = RecipeIngredients
-#         fields = ['ingredients', 'quantity', 'measure']
-#         labels = {
-#             'ingredients': 'Ingredient',
-#         }
-#
-#     def remove_ingredients(self):
-#         ingredient = self.cleaned_data.get('ingredients')
-#         if not ingredient:
-#             raise forms.ValidationError("Ingredient can not be blank")
-#         return ingredient
-#
-#
-# RecipeIngredientsFormset = inlineformset_factory(
-#     Recipe,
-#     RecipeIngredients,
-#     form=RecipeIngredientsForm,
-#     extra=1,
-#     widgets={
-#         'ingredients': forms.Select,
-#         'quantity': forms.NumberInput(attrs={'min': 1}),
-#         'measure': forms.Select,
-#     }
-# )
-#
-#
-# class RecipeAddForm(forms.ModelForm):
-#     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.SelectMultiple)
-#     occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(), widget=forms.SelectMultiple)
-#     cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(), widget=forms.SelectMultiple)
-#     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
-#     instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
-#
-#     class Meta:
-#         model = Recipe
-#         fields = ['name', 'description', 'instructions', 'category', 'occasion', 'cuisine']
-
-
 class RecipeForm(forms.ModelForm):
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
-                                              widget=forms.Select(attrs={'class': 'form-control'}))
-    occasion = forms.ModelMultipleChoiceField(queryset=Occasion.objects.all(),
-                                              widget=forms.Select(attrs={'class': 'form-control'}))
-    cuisine = forms.ModelMultipleChoiceField(queryset=Cuisine.objects.all(),
-                                             widget=forms.Select(attrs={'class': 'form-control'}))
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    occasion = forms.ModelChoiceField(
+        queryset=Occasion.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    cuisine = forms.ModelChoiceField(
+        queryset=Cuisine.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
     instructions = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))
 
@@ -63,9 +29,6 @@ class RecipeForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
             'instructions': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
-            'category': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'occasion': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'cuisine': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 

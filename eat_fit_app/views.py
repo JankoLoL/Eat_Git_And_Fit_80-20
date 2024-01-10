@@ -24,20 +24,16 @@ class RecipeListView(View):
 
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
-        recipe = Recipe.objects.get(id=recipe_id)
-        ingredients_list = RecipeIngredients.objects.filter(recipe=recipe)
-        recipe_category = RecipeCategory.objects.filter(recipe=recipe)
-        recipe_occasion = RecipeOccasion.objects.get(recipe=recipe)
+        recipe = get_object_or_404(Recipe, id=recipe_id)
 
         context = {
             'recipe': recipe,
-            'ingredients': ingredients_list,
-            'description': recipe.description,
-            'instructions': recipe.instructions,
-            'category': recipe_category,
-            'occasion': recipe_occasion,
+            'ingredients': recipe.recipeingredients_set.all(),
+            'categories': recipe.categories.all(),
+            'occasions': recipe.occasions.all(),
+            'cuisines': recipe.cuisines.all(),
         }
-        return render(request, "app-recipe-details.html", context=context)
+        return render(request, "app-recipe-details.html", context)
 
 
 class CategoryListView(View):
@@ -78,50 +74,26 @@ class RecipeAddView(View):
         form = RecipeForm(request.POST)
         formset = RecipeIngredientFormSet(request.POST)
 
-        if form.is_valid() and formset.is_valid():
-            recipe = form.save()
-            formset.instance = recipe
-            formset.save()
+        if form.is_valid():
+            recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.save()
 
-            recipe.occasions.set(form.cleaned_data['occasion'])
-            recipe.categories.set(form.cleaned_data['category'])
-            recipe.cuisines.set(form.cleaned_data['cuisine'])
-            return redirect('recipe-details', recipe_id=recipe.id)
+            RecipeCategory.objects.create(recipe=recipe, category=form.cleaned_data['category'])
+            RecipeOccasion.objects.create(recipe=recipe, occasion=form.cleaned_data['occasion'])
+            RecipeCuisine.objects.create(recipe=recipe, cuisine=form.cleaned_data['cuisine'])
 
-    # return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
+            formset.instance = recipe
+            if formset.is_valid():
+                formset.save()
+                return redirect('recipe-details', recipe_id=recipe.id)
+            else:
+                print("Form errors:", formset.errors)
 
+        if not form.is_valid():
+            print("Form errors:", form.errors)
 
-# class RecipeAddView(LoginRequiredMixin, View):
-#
-#     def get(self, request):
-#         form = RecipeAddForm()
-#         formset = RecipeIngredientsFormset(queryset=RecipeIngredients.objects.none(), prefix='ingredients')
-#         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
-#
-#     def post(self, request):
-#         form = RecipeAddForm(request.POST)
-#         formset = RecipeIngredientsFormset(request.POST, prefix='ingredients')
-#
-#         if form.is_valid() and formset.is_valid():
-#             recipe = form.save(commit=False)
-#             recipe.user = request.user
-#             recipe.save()
-#
-#             recipe.occasions.set(form.cleaned_data['occasion'])
-#             recipe.categories.set(form.cleaned_data['category'])
-#             recipe.cuisines.set(form.cleaned_data['cuisine'])
-#
-#             for instance in formset.save(commit=False):
-#                 instance.recipe = recipe
-#                 instance.save()
-#
-#             return redirect('recipe-details', recipe_id=recipe.id)
-#
-#         logger.error("RecipeAddForm Errors: %s", form.errors)
-#         logger.error("RecipeIngredientsFormset Errors: %s", formset.errors)
-#         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
+        return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
 
 
 class RecipeEditView(LoginRequiredMixin, View):

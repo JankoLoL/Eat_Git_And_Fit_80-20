@@ -18,7 +18,6 @@ class RecipeImage(models.Model):
     type = models.CharField(max_length=30, choices=TYPE_CHOICES)
     description = models.TextField()
     alt_description = models.CharField(max_length=256, blank=True, null=True)
-
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="uploaded_images")
     image_file = models.ImageField(upload_to=recipe_image_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)

@@ -1,31 +1,92 @@
 {% extends '__base__.html' %}
+{% load static %}
 {% block title %}Recipe details{% endblock title %}
+
 {% block content %}
-    <h1>{{ recipe.name }}</h1>
-    <p>Description:<br>
-        {{ recipe.description }}
-    </p>
+    <div class="container mt-4">
+    <h1 class="mb-4">{{ recipe.name }}</h1>
 
-    <p>Instructions:<br>
-        {{ recipe.instructions }}
-    </p>
-    <p>Ingredients:<br>
-    <ul>
-        {% for ingredient in recipe.ingredients.all %}
-            <li>{{ ingredient }}</li>
-        {% endfor %}
-    </ul>
-    <p>Category:<br>
-        {{  category | join:", "   }}
-    </p>
-    <p>Occasion:<br>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">{{ recipe.description }}</p>
+        </div>
+    </div>
 
-        {{  occasion | join:", "   }}
-    </p>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Instructions</h5>
+            <p class="card-text">{{ recipe.instructions }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Ingredients</h5>
+            <ul class="list-group list-group-flush">
+                {% for ingredient in recipe.ingredients.all %}
+                    <li class="list-group-item">{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <h5>Category</h5>
+            <p>
+                {% for category in recipe.categories.all %}
+                    {{ category.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h5>Occasion</h5>
+            <p>
+                {% for occasion in recipe.occasions.all %}
+                    {{ occasion.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h5>Cuisine</h5>
+            <p>
+                {% for cuisine in recipe.cuisines.all %}
+                    {{ cuisine.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+
+
     <div>
-    <button><a href="{% url 'recipe-edit' recipe.id %}" class="navigation-button">Edit Recipe</a></button>
-    <button><a href="{% url 'recipes' %}" class="navigation-button">Back to Recipes</a></button>
-    <button><a href="{% url 'recipe-delete' recipe.id %}" class="navigation-button">Delete Recipe</a></button>
-    <a href="{% url 'recipe-image-upload' recipe_id=recipe.id %}">Upload Image</a>
+        <h3 class="mt-4 mb-3">Images</h3>
+        <div class="row">
+            {% for image in recipe.recipe_images.all %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ image.type|title }}
+                        </div>
+                        <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
+                        <div class="card-body">
+                            <p class="card-text">{{ image.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col">
+                    <p>No images uploaded for this recipe yet.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="mb-4">
+            <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary me-2">Edit Recipe</a>
+            <a href="{% url 'recipes' %}" class="btn btn-secondary me-2">Back to Recipes</a>
+            <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger me-2">Delete Recipe</a>
+            <a href="{% url 'recipe-image-upload' recipe_id=recipe.id %}" class="btn btn-success">Upload Image</a>
+        </div>
     </div>
 {% endblock content %}
