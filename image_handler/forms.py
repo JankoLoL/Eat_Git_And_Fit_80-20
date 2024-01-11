@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
+from crispy_forms.layout import Layout, Submit, HTML, Div
 from .models import RecipeImage
 
 
@@ -18,5 +18,9 @@ class RecipeImageUploadForm(forms.ModelForm):
             'description',
             'alt_description',
             'image_file',
-            Submit('submit', 'Upload', css_class='btn-primary')
+            Div(
+                Submit('submit', 'Upload', css_class='btn-primary'),
+                HTML('<button type="button" class="btn btn-secondary ml-2" onclick="history.back()">Go Back</button>'),
+                css_class='d-flex justify-content-between'
+            )
         )

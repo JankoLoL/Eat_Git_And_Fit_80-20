@@ -5,7 +5,7 @@
 {% block head %}
     <style>
         body {
-            background-image: url("{% static 'images/background-pic.png' %}");
+            background-image: url("{% static 'images/fornavbar.jpg' %}");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center center;
@@ -18,17 +18,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.4); /* Kolor przezroczystej nakładki */
-            z-index: -1; /* Aby nakładka była pod innymi elementami */
+            background-color: rgba(255, 255, 255, 0.4);
+            z-index: -1;
         }
     </style>
 {% endblock head %}
 
 {% block header %}
     <div class=" text-center mb-5">
-    <h2 class="text-decoration-underline">Home page</h2>
+    <h2 class="text-decoration-underline fst-italic fw-normal">Home page</h2>
         <br>
-    <h3 class="fst-italic">Explore delicious and healthy recipes, BON APPETIT!</h3>
+    <h3 class="fst-italic fw-light">Explore delicious and healthy recipes, BON APPETIT!</h3>
     </div>
 {% endblock header %}
 

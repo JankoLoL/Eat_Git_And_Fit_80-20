@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary " style="background-color: #3BCC40;>
+<nav class="navbar navbar-expand-lg bg-body-tertiary " style="background-color: whitesmoke;>
     <div class=" container-fluid">
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,14 +7,14 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="btn btn-primary" style="background-color: #30A234" href="{% url 'index' %}">Home</a>
+            <a class="btn btn-secondary"  href="{% url 'index' %}">Home</a>
         </li>
         <li class="nav-item dropdown">
-            <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Recipes
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-dark">
                 <li><a class="dropdown-item" href="{% url 'recipes' %}">All recipes</a></li>
                 <li><a class="dropdown-item" href="{% url 'categories' %}">Categories</a></li>
                 <li><a class="dropdown-item" href="{% url 'occasions' %}">Occasions</a></li>
@@ -85,10 +85,35 @@
 {##}
 
 
-<form  class="d-flex" role="search">
+<form class="d-flex" role="search">
     <input id="search-bar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
-</div>
-</div>
+{##}
+{#<style>#}
+{#    .navbar .nav-item .btn {#}
+{#        margin-left: 5px;#}
+{#        margin-right: 5px;#}
+{#        background-color: #2E7D32;#}
+{#        border-color: #2E7D32;#}
+{#    }#}
+{##}
+{#    .navbar .nav-item .btn:hover {#}
+{#        background-color: #60ad5e;#}
+{#    }#}
+{##}
+{#    .navbar .navbar-text {#}
+{#        color: #fff; /* Adjust if needed */#}
+{#    }#}
+{##}
+{#    .navbar .navbar-toggler {#}
+{#        border-color: #fff; /* Adjust if needed */#}
+{#    }#}
+{##}
+{#    .navbar .navbar-toggler-icon {#}
+{#        background-image: url("data:image/svg+xml,<svg ...>"); /* Adjust with correct SVG or style */#}
+{#    }#}
+{#</style>#}
+
+    </div>
 </nav>
