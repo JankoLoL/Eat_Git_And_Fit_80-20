@@ -173,7 +173,7 @@ class LoginView(View):
 
     def get(self, request):
         form = LoginForm()
-        return render(request, 'form.html', {'form': form})
+        return render(request, 'user-form.html', {'form': form})
 
     def post(self, request):
         form = LoginForm(request.POST)
@@ -182,7 +182,7 @@ class LoginView(View):
             if user is not None:
                 login(request, user)
             return redirect(self.request.GET.get('next', 'index'))
-        return render(request, 'form.html', {'form': form})
+        return render(request, 'user-form.html', {'form': form})
 
 
 class LogoutView(View):
@@ -195,7 +195,7 @@ class CreateUserView(View):
 
     def get(self, request):
         form = UserCreateForm()
-        return render(request, 'form.html', {'form': form})
+        return render(request, 'user-form.html', {'form': form})
 
     def post(self, request):
         form = UserCreateForm(request.POST)
@@ -205,4 +205,4 @@ class CreateUserView(View):
             user.save()
             login(request, user)
             return redirect('index')
-        return render(request, 'form.html', {'form': form})
+        return render(request, 'user-form.html', {'form': form})
