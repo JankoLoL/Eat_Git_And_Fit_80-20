@@ -1,1 +1,35 @@
 
+body {
+    background: rgb(111, 115, 111);
+    background: linear-gradient(90deg, rgba(111, 115, 111, 1) 8%, rgba(185, 190, 185, 1) 51%);
+}
+
+/*footer {*/
+/*    !*background: rgb(236, 236, 236);*!*/
+/*    !*background: radial-gradient(circle, rgba(236, 236, 236, 1) 14%, rgba(162, 162, 162, 1) 66%, rgba(225, 228, 225, 1) 74%);*!*/
+
+/*    background: rgb(101, 103, 101);*/
+/*    background: linear-gradient(90deg, rgba(101, 103, 101, 1) 0%, rgba(236, 236, 236, 1) 48%, rgba(101, 103, 101, 1) 90%);*/
+/*}*/
+
+footer {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    text-align: center; /* Center align text */
+}
+
+
+.styled-text-footer {
+    font-family: Italic; /* Choose any font you like */
+    color: #333; /* Text color */
+    background-color: #fff; /* Background color of the text frame */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
+    border: 1px solid #ddd; /* Border around the text */
+    padding: 10px 20px; /* Padding inside the frame */
+    margin: 10px auto; /* Centers the text frame with some space around */
+    display: inline-block; /* Makes the background only as wide as the text */
+    border-radius: 25px; /* Makes the frame round */
+    text-align: center; /* Ensures text is centered */
+}
+

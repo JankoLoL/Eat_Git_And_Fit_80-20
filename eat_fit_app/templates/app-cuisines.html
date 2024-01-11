@@ -1,25 +1,30 @@
 {% extends '__base__.html' %}
-{% block title %}Recipes by cuisine{% endblock title %}
-
+{% block title %}
+    Recipes by cuisine
+{% endblock title %}
 {% block content %}
     <div class="container">
-        <div class="row d-flex justify-content-center align-items-center">
+        <div class="row justify-content-center">
             <div class="col-md-6">
-                <ul class="list-group">
-                    {% for cuisine in cuisines %}
-                        <li class="list-group-item">
-                            <a href="{% url 'recipes-by-cuisine' cuisine.id %}"
-                               class="link-button">{{ cuisine.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <button onclick="history.back()" class="btn btn-secondary me-2">Go Back</button>
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h4 class="card-title">Cuisines</h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for cuisine in cuisines %}
+                            <li class="list-group-item">
+                                <a href="{% url 'recipes-by-cuisine' cuisine.id %}"
+                                   class="btn btn-outline-success">{{ cuisine.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
-
-
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

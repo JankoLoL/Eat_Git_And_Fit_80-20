@@ -25,12 +25,16 @@
 {% endblock head %}
 
 {% block header %}
-    <div class=" text-center mb-5">
-    <h2 class="text-decoration-underline fst-italic fw-normal">Home page</h2>
+    <div class="text-center mb-5">
+        <h1 class="text-decoration-underline fst-italic fw-bold">Welcome to Eat Git and Fit Page</h1>
         <br>
-    <h3 class="fst-italic fw-light">Explore delicious and healthy recipes, BON APPETIT!</h3>
+        <h2 class="fst-italic fw-normal">Discover the Joy of Healthy Eating</h2>
+        <p class="lead fw-normal mt-3">Embark on a culinary adventure where health meets taste. Dive into our collection of recipes that follow the 80/20 rule - 80% wholesome goodness, 20% indulgent delights. Find the perfect balance in your diet and enjoy flavors that tantalize your taste buds without compromising on health.</p>
+        <p class="mt-3">Whether you're a seasoned chef or a kitchen newbie, our recipes are designed to be easy, nutritious, and delicious. Get ready to transform your meals into a journey of healthy, flavorful experiences.</p>
+        <a href="{% url 'recipes' %}" class="btn btn-outline-success">Explore Recipes</a>
     </div>
 {% endblock header %}
+
 
 
 
