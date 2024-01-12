@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eat_fit_app.forms import LoginForm, UserCreateForm, RecipeForm, RecipeIngredientFormSet
+from eat_fit_app.forms import RecipeForm, RecipeIngredientFormSet
 from eat_fit_app.models import *
 import logging
 
@@ -72,7 +72,7 @@ class RecipeByCuisineView(View):
         return render(request, "app-recipes.html", {"recipes": recipes})
 
 
-class RecipeAddView(View):
+class RecipeAddView(LoginRequiredMixin, View):
     def get(self, request):
         form = RecipeForm()
         formset = RecipeIngredientFormSet()
@@ -167,42 +167,41 @@ class CuisineListView(View):
         cuisines = Cuisine.objects.all()
         return render(request, "app-cuisines.html", {"cuisines": cuisines})
 
-
 # ____________LOGIN____________________
-class LoginView(View):
-
-    def get(self, request):
-        form = LoginForm()
-        return render(request, 'user-form.html', {'form': form})
-
-    def post(self, request):
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = form.cleaned_data['user']
-            if user is not None:
-                login(request, user)
-            return redirect(self.request.GET.get('next', 'index'))
-        return render(request, 'user-form.html', {'form': form})
-
-
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return redirect('index')
-
-
-class CreateUserView(View):
-
-    def get(self, request):
-        form = UserCreateForm()
-        return render(request, 'user-form.html', {'form': form})
-
-    def post(self, request):
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password1'])
-            user.save()
-            login(request, user)
-            return redirect('index')
-        return render(request, 'user-form.html', {'form': form})
+# class LoginView(View):
+#
+#     def get(self, request):
+#         form = LoginForm()
+#         return render(request, 'user-form.html', {'form': form})
+#
+#     def post(self, request):
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             user = form.cleaned_data['user']
+#             if user is not None:
+#                 login(request, user)
+#             return redirect(self.request.GET.get('next', 'index'))
+#         return render(request, 'user-form.html', {'form': form})
+#
+#
+# class LogoutView(View):
+#     def get(self, request):
+#         logout(request)
+#         return redirect('index')
+#
+#
+# class CreateUserView(View):
+#
+#     def get(self, request):
+#         form = UserCreateForm()
+#         return render(request, 'user-form.html', {'form': form})
+#
+#     def post(self, request):
+#         form = UserCreateForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.set_password(form.cleaned_data['password1'])
+#             user.save()
+#             login(request, user)
+#             return redirect('index')
+#         return render(request, 'user-form.html', {'form': form})

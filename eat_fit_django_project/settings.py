@@ -35,11 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'widget_tweaks',
     'crispy_forms',
     "crispy_bootstrap5",
+
     'eat_fit_app',
     'image_handler',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +130,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/'
+
 
 try:
     from .local_settings import DATABASES

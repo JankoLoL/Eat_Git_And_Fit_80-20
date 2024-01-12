@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.urls import path, include, re_path
 from eat_fit_app.views import RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
-    RecipeEditView, RecipeDeleteView, OccasionListView, LoginView, LogoutView, CreateUserView, MainView, \
+    RecipeEditView, RecipeDeleteView, OccasionListView, MainView, \
     RecipeByCategoryView, RecipeByOccasionView, CuisineListView, RecipeByCuisineView
 from eat_fit_django_project import settings
 
@@ -35,9 +35,9 @@ urlpatterns = [
     path('recipe/delete/<int:recipe_id>/', RecipeDeleteView.as_view(), name='recipe-delete'),
     path('occasions/', OccasionListView.as_view(), name='occasions'),
     path('cuisine/', CuisineListView.as_view(), name='cuisines'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('register/', CreateUserView.as_view(), name='register')
+    # path('login/', LoginView.as_view(), name='login'),
+    # path('logout/', LogoutView.as_view(), name='logout'),
+    # path('register/', CreateUserView.as_view(), name='register')
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
