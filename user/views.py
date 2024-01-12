@@ -12,16 +12,11 @@ from .forms import EditUserProfileForm
 class UserRegisterView(CreateView):
     form_class = UserCreationForm
     template_name = 'user/register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('user:login')
 
     def form_valid(self, form):
         valid = super(UserRegisterView, self).form_valid(form)
 
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        new_user = authenticate(self.request, username=username, password=password)
-        if new_user:
-            login(self.request, new_user)
         return valid
 
 

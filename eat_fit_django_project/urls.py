@@ -21,13 +21,14 @@ from django.conf.urls.static import static
 from eat_fit_app.views import *
 from eat_fit_django_project import settings
 from image_handler.views import *
+from user.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eat_fit_app.urls')),
-    path('image/', include('image_handler.urls')),
-    path('user/', include('user.urls')),
+    path('image/', include('image_handler.urls', namespace='image_handler')),
+    path('user/', include('user.urls', namespace='user')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
