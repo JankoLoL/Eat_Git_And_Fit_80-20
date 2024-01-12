@@ -73,7 +73,9 @@ class RecipeByCuisineView(View):
 
 
 class RecipeAddView(LoginRequiredMixin, View):
+
     def get(self, request):
+
         form = RecipeForm()
         formset = RecipeIngredientFormSet()
         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
@@ -166,42 +168,3 @@ class CuisineListView(View):
     def get(self, request):
         cuisines = Cuisine.objects.all()
         return render(request, "app-cuisines.html", {"cuisines": cuisines})
-
-# ____________LOGIN____________________
-# class LoginView(View):
-#
-#     def get(self, request):
-#         form = LoginForm()
-#         return render(request, 'user-form.html', {'form': form})
-#
-#     def post(self, request):
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             user = form.cleaned_data['user']
-#             if user is not None:
-#                 login(request, user)
-#             return redirect(self.request.GET.get('next', 'index'))
-#         return render(request, 'user-form.html', {'form': form})
-#
-#
-# class LogoutView(View):
-#     def get(self, request):
-#         logout(request)
-#         return redirect('index')
-#
-#
-# class CreateUserView(View):
-#
-#     def get(self, request):
-#         form = UserCreateForm()
-#         return render(request, 'user-form.html', {'form': form})
-#
-#     def post(self, request):
-#         form = UserCreateForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.set_password(form.cleaned_data['password1'])
-#             user.save()
-#             login(request, user)
-#             return redirect('index')
-#         return render(request, 'user-form.html', {'form': form})

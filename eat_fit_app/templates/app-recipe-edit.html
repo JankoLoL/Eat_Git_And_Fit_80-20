@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Edit recipe
+    Edit recipe
 {% endblock title %}
 
 {% block content %}
@@ -121,11 +121,34 @@ Edit recipe
 
     </div>
 
+    <div>
+    <h3 class="mt-4 mb-3">Images</h3>
+    <div class="row">
+        {% for image in recipe.recipe_images.all %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Type: {{ image.type }}
+                        <br>
+                        Title: {{ image.name|title }}
+                    </div>
+                    <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
+                    <div class="card-body">
+                        <p class="card-text">Description:
+                            <br>
+                            {{ image.description }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <p>No images uploaded for this recipe yet.</p>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock content %}
 {% block javascript %}
-    <script src="{% static 'js/edit_recipe.js' %}"></script>
-    <script type="text/javascript">
-        const ingredientsData = JSON.parse('{{ ingredients_json|safe }}');
-        const measuresData = JSON.parse('{{ measures_json|safe }}');
-    </script>
+    <script src="{% static 'js/add_ingredient.js' %}"></script>
+
 {% endblock javascript %}

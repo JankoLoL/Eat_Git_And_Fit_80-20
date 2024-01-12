@@ -35,9 +35,6 @@ urlpatterns = [
     path('recipe/delete/<int:recipe_id>/', RecipeDeleteView.as_view(), name='recipe-delete'),
     path('occasions/', OccasionListView.as_view(), name='occasions'),
     path('cuisine/', CuisineListView.as_view(), name='cuisines'),
-    # path('login/', LoginView.as_view(), name='login'),
-    # path('logout/', LogoutView.as_view(), name='logout'),
-    # path('register/', CreateUserView.as_view(), name='register')
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
