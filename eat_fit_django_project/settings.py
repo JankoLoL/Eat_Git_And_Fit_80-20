@@ -133,6 +133,11 @@ LOGIN_URL = 'user:login'
 LOGIN_REDIRECT_URL = '/'
 
 
+# Messages
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
+
 try:
     from .local_settings import DATABASES
 except ModuleNotFoundError:

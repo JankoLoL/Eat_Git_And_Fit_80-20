@@ -3,11 +3,14 @@
 {% load widget_tweaks %}
 
 {% block title %}
-Add recipe
+    Add recipe
 {% endblock title %}
 
 {% block content %}
-    <div class="container mt-4">
+
+
+
+
         <h1 class="mb-4">Add Recipe</h1>
         <form method="post" id="recipe-form" class="needs-validation" novalidate>
             {% csrf_token %}

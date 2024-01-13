@@ -1,11 +1,13 @@
 import json
 
-from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
 from eat_fit_app.forms import RecipeForm, RecipeIngredientFormSet
-from eat_fit_app.models import *
+from eat_fit_app.models import Recipe, Category, Occasion, Cuisine, RecipeCategory, RecipeOccasion, RecipeCuisine, \
+    Ingredients, RecipeIngredientsMeasure
 import logging
 
 logger = logging.getLogger(__name__)
@@ -73,6 +75,10 @@ class RecipeByCuisineView(View):
 
 
 class RecipeAddView(LoginRequiredMixin, View):
+
+    def handle_no_permission(self):
+        messages.info(self.request, "Please login to add a recipe")
+        return super().handle_no_permission()
 
     def get(self, request):
 
