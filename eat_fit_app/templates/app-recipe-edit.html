@@ -87,12 +87,13 @@
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+
         </form>
 
         <template id="ingredient-form-template">
@@ -128,9 +129,9 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        Type: {{ image.type }}
+                        Image type: {{ image.type }}
                         <br>
-                        Title: {{ image.name|title }}
+                        Image name: {{ image.name|title }}
                     </div>
                     <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
                     <div class="card-body">
@@ -145,6 +146,9 @@
                 <p>No images uploaded for this recipe yet.</p>
             </div>
         {% endfor %}
+        <a href="{% url 'image_handler:recipe-image-upload' recipe_id=recipe.id %}" class="btn btn-success">Upload
+            Image</a>
+
     </div>
 
 {% endblock content %}

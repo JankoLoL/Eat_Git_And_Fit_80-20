@@ -21,6 +21,8 @@ class RecipeImageUploadView(View):
         recipe = get_object_or_404(Recipe, pk=recipe_id)
 
         if form.is_valid():
+            print("Form data:", form.cleaned_data)
+
             recipe_image = form.save(commit=False)
             recipe_image.recipe = recipe
             recipe_image.user = request.user

@@ -8,15 +8,15 @@
     <div class="container mt-4">
     <h1 class="mb-4">{{ recipe.name }}</h1>
 
-{#    {% if main_image %}#}
-{#        <div class="card mb-4" style="background: url('{{ main_image.image_file.url }}') center/cover no-repeat;">#}
-{#            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.5);">#}
-{#                <!-- Adjust the rgba values for the desired transparency -->#}
-{#                <h5 class="card-title">Main Image</h5>#}
-{#                <p class="card-text">{{ main_image.description }}</p>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endif %}#}
+    {#    {% if main_image %}#}
+    {#        <div class="card mb-4" style="background: url('{{ main_image.image_file.url }}') center/cover no-repeat;">#}
+    {#            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.5);">#}
+    {#                <!-- Adjust the rgba values for the desired transparency -->#}
+    {#                <h5 class="card-title">Main Image</h5>#}
+    {#                <p class="card-text">{{ main_image.description }}</p>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    {% endif %}#}
 
 
 
@@ -71,8 +71,6 @@
         </div>
     </div>
 
-
-
     <div>
         <h3 class="mt-4 mb-3">Images</h3>
         <div class="row">
@@ -80,11 +78,16 @@
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            {{ image.name|title }}
+                            <p>Image type: {{ image.type }}</p>
+                            <p> Image name: {{ image.name|title }}</p>
                         </div>
                         <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
                         <div class="card-body">
-                            <p class="card-text">{{ image.description }}</p>
+                            <p class="card-text">
+                                Description:
+                                <br>
+                                {{ image.description }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -100,7 +103,8 @@
             <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary me-2">Edit Recipe</a>
             <a href="{% url 'recipes' %}" class="btn btn-secondary me-2">Back to Recipes</a>
             <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger me-2">Delete Recipe</a>
-            <a href="{% url 'image_handler:recipe-image-upload' recipe_id=recipe.id %}" class="btn btn-success">Upload Image</a>
         </div>
+        <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
+
     </div>
 {% endblock content %}

@@ -24,4 +24,4 @@ class RecipeImage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Image name: {self.name} for recipe {self.recipe} added by {self.user}"
+        return f"Image name: {self.name}, Recipe name: {self.recipe.name}, added by: {self.user}"
