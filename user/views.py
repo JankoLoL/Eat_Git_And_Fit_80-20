@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -43,3 +43,12 @@ class UserEditView(LoginRequiredMixin, UpdateView):
         super(UserEditView, self).form_valid(form)
         messages.success(self.request, 'Profile successfully updated')
         return redirect('user:edit-profile')
+
+
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'user/change-password.html'
+    success_url = reverse_lazy('user:password_change_done')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Your password was successfully updated!")
+        return super().form_valid(form)

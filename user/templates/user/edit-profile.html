@@ -27,8 +27,14 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-                    <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Update Profile
+                        </button>
+                        <div>
+                            <a href="javascript:history.back();" class="btn btn-secondary me-2">Go Back</a>
+                            <a href="{% url 'user:change-password' %}" class="btn btn-danger">Change Password</a>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
