@@ -33,15 +33,17 @@ class RecipeListView(View):
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        # main_image = recipe.recipe_images.filter(type='main_image').first()
+        main_image = recipe.recipe_images.filter(type='main_image').first()
+        additional_images = recipe.recipe_images.filter(type='additional_image').all()
 
         context = {
             'recipe': recipe,
+            'main_image': main_image,
+            'additional_images': additional_images,
             'ingredients': recipe.recipeingredients_set.all(),
             'categories': recipe.categories.all(),
             'occasions': recipe.occasions.all(),
             'cuisines': recipe.cuisines.all(),
-            # 'main_image': main_image,
         }
         return render(request, "app-recipe-details.html", context)
 

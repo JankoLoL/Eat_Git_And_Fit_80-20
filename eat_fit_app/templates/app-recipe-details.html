@@ -5,106 +5,122 @@
 {% block title %}Recipe details{% endblock title %}
 
 {% block content %}
-    <div class="container mt-4">
-    <h1 class="mb-4">{{ recipe.name }}</h1>
+    <div class="container mt-5">
+        <h1 class="display-4 text-center mb-5">{{ recipe.name }}</h1>
 
-    {#    {% if main_image %}#}
-    {#        <div class="card mb-4" style="background: url('{{ main_image.image_file.url }}') center/cover no-repeat;">#}
-    {#            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.5);">#}
-    {#                <!-- Adjust the rgba values for the desired transparency -->#}
-    {#                <h5 class="card-title">Main Image</h5>#}
-    {#                <p class="card-text">{{ main_image.description }}</p>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    {% endif %}#}
-
-
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Description</h5>
-            <p class="card-text">{{ recipe.description }}</p>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Instructions</h5>
-            <p class="card-text">{{ recipe.instructions }}</p>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Ingredients</h5>
-            <ul class="list-group list-group-flush">
-                {% for ingredient in recipe.ingredients.all %}
-                    <li class="list-group-item">{{ ingredient }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <h5>Category</h5>
-            <p>
-                {% for category in recipe.categories.all %}
-                    {{ category.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h5>Occasion</h5>
-            <p>
-                {% for occasion in recipe.occasions.all %}
-                    {{ occasion.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h5>Cuisine</h5>
-            <p>
-                {% for cuisine in recipe.cuisines.all %}
-                    {{ cuisine.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-        </div>
-    </div>
-
-    <div>
-        <h3 class="mt-4 mb-3">Images</h3>
         <div class="row">
-            {% for image in recipe.recipe_images.all %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <p>Image type: {{ image.type }}</p>
-                            <p> Image name: {{ image.name|title }}</p>
+            {% if main_image %}
+                <div class="col-lg-8 text-center mb-5">
+                    <img src="{{ main_image.image_file.url }}" class="img-fluid" alt="{{ main_image.alt_description }}"
+                         style="max-height: 400px;">
+                    <p class="mt-2">{{ main_image.description }}</p>
+                </div>
+            {% endif %}
+
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">Details</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Category: {{ recipe.categories.all|join:", " }}</li>
+                        <li class="list-group-item">Occasion: {{ recipe.occasions.all|join:", " }}</li>
+                        <li class="list-group-item">Cuisine: {{ recipe.cuisines.all|join:", " }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">{{ recipe.description }}</p>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Instructions</h5>
+                        <p class="card-text">{{ recipe.instructions }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Ingredients</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Ingredient</th>
+                                    <th>Quantity</th>
+                                    <th>Measure</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ingredient in ingredients %}
+                                    <tr>
+                                        <td>{{ ingredient.ingredients }}</td>
+                                        <td>{{ ingredient.quantity }}</td>
+                                        <td>{{ ingredient.measure }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                        <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Description:
-                                <br>
-                                {{ image.description }}
-                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if additional_images %}
+            <h3 class="mt-4 mb-3 text-center">Step-by-Step Instructions</h3>
+            {% for image in additional_images %}
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-8">
+                        <div class="card shadow"> <!-- Added shadow class for styling -->
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-6">
+                                    <div class="position-relative">
+                                        <img src="{{ image.image_file.url }}" class="img-fluid w-100"
+                                             alt="{{ image.alt_description }}"
+                                             style="object-fit: cover; height: 300px;">
+                                        <div class="position-absolute top-0 start-0 bg-white p-1" style="opacity: 0.8;">
+                                            {{ image.name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="card-body text-center">
+                                        <p class="card-text">{{ image.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             {% empty %}
-                <div class="col">
-                    <p>No images uploaded for this recipe yet.</p>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <p>No additional step-by-step images.</p>
+                    </div>
                 </div>
             {% endfor %}
+        {% endif %}
+
+
+        <div class="d-flex justify-content-between align-items-center my-4">
+            <div class="d-flex justify-content-between align-items-center my-4">
+                <div>
+                    <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a>
+                    <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger">Delete Recipe</a>
+                </div>
+                <div>
+                    <a href="javascript:history.back();" class="btn btn-warning">Previous page</a>
+                    <a href="{% url 'recipes' %}" class="btn btn-dark">Back to all Recipes</a>
+                </div>
+            </div>
         </div>
-
-
-        <div class="mb-4">
-            <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary me-2">Edit Recipe</a>
-            <a href="{% url 'recipes' %}" class="btn btn-secondary me-2">Back to all Recipes</a>
-            <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger me-2">Delete Recipe</a>
-        </div>
-        <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
-
     </div>
 {% endblock content %}
