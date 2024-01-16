@@ -124,6 +124,10 @@ class RecipeEditView(LoginRequiredMixin, View):
         ingredients = list(Ingredients.objects.values('id', 'name'))
         measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
 
+        if not (request.user == recipe.user or request.user.is_staff):
+            messages.error(request, "You do not have permission to edit this recipe.")
+            return redirect('recipe-details', recipe_id=recipe.id)
+
         return render(request, 'app-recipe-edit.html', {
             'form': form,
             'formset': formset,
@@ -137,11 +141,17 @@ class RecipeEditView(LoginRequiredMixin, View):
         form = RecipeForm(request.POST, instance=recipe)
         formset = RecipeIngredientFormSet(request.POST, instance=recipe)
 
+        if not (request.user == recipe.user or request.user.is_staff):
+            messages.error(request, "You do not have permission to edit this recipe.")
+            return redirect('recipe-details', recipe_id=recipe.id)
+
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
+            messages.error(request, "There was an error with your submission. Please check the form.")
+
             ingredients = list(Ingredients.objects.values('id', 'name'))
             measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -9,6 +10,7 @@ class Recipe(models.Model):
     recipe_ingredients = models.ManyToManyField('Ingredients', through='RecipeIngredients', related_name='recipes')
     description = models.TextField()
     instructions = models.TextField(default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='recipes')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

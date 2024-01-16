@@ -113,8 +113,10 @@
         <div class="d-flex justify-content-between align-items-center my-4">
             <div class="d-flex justify-content-between align-items-center my-4">
                 <div>
-                    <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a>
-                    <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger">Delete Recipe</a>
+                    {% if request.user == recipe.user or request.user.is_staff %}
+                        <a href="{% url 'recipe-edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a>
+                        <a href="{% url 'recipe-delete' recipe.id %}" class="btn btn-danger">Delete Recipe</a>
+                    {% endif %}
                 </div>
                 <div>
                     <a href="javascript:history.back();" class="btn btn-warning">Previous page</a>
