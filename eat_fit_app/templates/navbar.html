@@ -1,5 +1,10 @@
+{% load static %}
+
+<body>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary " style="background-color: whitesmoke;>
-    <div class=" container-fluid">
+    <div class=" container-fluid
+">
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -27,96 +32,103 @@
         </li>
     </ul>
 
+{#    <div class="d-flex align-items-center justify-content-center flex-grow-1">#}
+{#        <div class="spinner-border" role="status" id="loadingSpinner">#}
+{#        </div>#}
+
+    </div>
 
     <div class="navbar-text px-2">
         {% if user.is_authenticated %}
             <p class="fst-italic">Welcome {{ user }}</p>
         {% endif %}
-
     </div>
-</div>
+    <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="btn btn-outline-success" href="{% url 'user:logout' %}">Logout</a>
+                <a class="btn btn-outline-success" href="{% url 'user:edit-profile' %}">Edit profile</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="btn btn-outline-success" href="{% url 'user:login' %}">Login</a>
+                <a class="btn btn-outline-success" href="{% url 'user:register' %}">Register</a>
 
-<ul class="navbar-nav ms-auto">
-    {% if user.is_authenticated %}
-        <li class="nav-item">
-            <a class="btn btn-outline-success" href="{% url 'user:logout' %}">Logout</a>
-            <a class="btn btn-outline-success" href="{% url 'user:edit-profile' %}">Edit profile</a>
-        </li>
-    {% else %}
-        <li class="nav-item">
-            <a class="btn btn-outline-success" href="{% url 'user:login' %}">Login</a>
-            <a class="btn btn-outline-success" href="{% url 'user:register' %}">Register</a>
-
-        </li>
-    {% endif %}
-</ul>
+            </li>
+        {% endif %}
+    </ul>
 
 
-{##}
-{#<nav class="navbar navbar-expand-lg navbar-dark bg-dark">#}
-{#  <div class="container-fluid">#}
-{#    <a class="navbar-brand" href="#">Navbar</a>#}
-{#    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">#}
-{#      <span class="navbar-toggler-icon"></span>#}
-{#    </button>#}
-{#    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">#}
-{#      <ul class="navbar-nav">#}
-{#        <li class="nav-item dropdown">#}
-{#          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
-{#            Dropdown#}
-{#          </a>#}
-{#          <ul class="dropdown-menu dropdown-menu-dark">#}
-{#            <li><a class="dropdown-item" href="#">Action</a></li>#}
-{#            <li><a class="dropdown-item" href="#">Another action</a></li>#}
-{#            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-{#          </ul>#}
-{#        </li>#}
-{#           <li class="nav-item dropdown">#}
-{#          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
-{#            Dropdown#}
-{#          </a>#}
-{#          <ul class="dropdown-menu dropdown-menu-dark">#}
-{#            <li><a class="dropdown-item" href="#">Action</a></li>#}
-{#            <li><a class="dropdown-item" href="#">Another action</a></li>#}
-{#            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-{#          </ul>#}
-{#        </li>#}
-{#      </ul>#}
-{#    </div>#}
-{#  </div>#}
-{#</nav>#}
-{##}
+    {##}
+    {#<nav class="navbar navbar-expand-lg navbar-dark bg-dark">#}
+    {#  <div class="container-fluid">#}
+    {#    <a class="navbar-brand" href="#">Navbar</a>#}
+    {#    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">#}
+    {#      <span class="navbar-toggler-icon"></span>#}
+    {#    </button>#}
+    {#    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">#}
+    {#      <ul class="navbar-nav">#}
+    {#        <li class="nav-item dropdown">#}
+    {#          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
+    {#            Dropdown#}
+    {#          </a>#}
+    {#          <ul class="dropdown-menu dropdown-menu-dark">#}
+    {#            <li><a class="dropdown-item" href="#">Action</a></li>#}
+    {#            <li><a class="dropdown-item" href="#">Another action</a></li>#}
+    {#            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+    {#          </ul>#}
+    {#        </li>#}
+    {#           <li class="nav-item dropdown">#}
+    {#          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">#}
+    {#            Dropdown#}
+    {#          </a>#}
+    {#          <ul class="dropdown-menu dropdown-menu-dark">#}
+    {#            <li><a class="dropdown-item" href="#">Action</a></li>#}
+    {#            <li><a class="dropdown-item" href="#">Another action</a></li>#}
+    {#            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+    {#          </ul>#}
+    {#        </li>#}
+    {#      </ul>#}
+    {#    </div>#}
+    {#  </div>#}
+    {#</nav>#}
+    {##}
 
 
-<form class="d-flex" role="search">
-    <input id="search-bar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
-{##}
-{#<style>#}
-{#    .navbar .nav-item .btn {#}
-{#        margin-left: 5px;#}
-{#        margin-right: 5px;#}
-{#        background-color: #2E7D32;#}
-{#        border-color: #2E7D32;#}
-{#    }#}
-{##}
-{#    .navbar .nav-item .btn:hover {#}
-{#        background-color: #60ad5e;#}
-{#    }#}
-{##}
-{#    .navbar .navbar-text {#}
-{#        color: #fff; /* Adjust if needed */#}
-{#    }#}
-{##}
-{#    .navbar .navbar-toggler {#}
-{#        border-color: #fff; /* Adjust if needed */#}
-{#    }#}
-{##}
-{#    .navbar .navbar-toggler-icon {#}
-{#        background-image: url("data:image/svg+xml,<svg ...>"); /* Adjust with correct SVG or style */#}
-{#    }#}
-{#</style>#}
+    <form class="d-flex" role="search">
+        <input id="search-bar" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    {##}
+    {#<style>#}
+    {#    .navbar .nav-item .btn {#}
+    {#        margin-left: 5px;#}
+    {#        margin-right: 5px;#}
+    {#        background-color: #2E7D32;#}
+    {#        border-color: #2E7D32;#}
+    {#    }#}
+    {##}
+    {#    .navbar .nav-item .btn:hover {#}
+    {#        background-color: #60ad5e;#}
+    {#    }#}
+    {##}
+    {#    .navbar .navbar-text {#}
+    {#        color: #fff; /* Adjust if needed */#}
+    {#    }#}
+    {##}
+    {#    .navbar .navbar-toggler {#}
+    {#        border-color: #fff; /* Adjust if needed */#}
+    {#    }#}
+    {##}
+    {#    .navbar .navbar-toggler-icon {#}
+    {#        background-image: url("data:image/svg+xml,<svg ...>"); /* Adjust with correct SVG or style */#}
+    {#    }#}
+    {#</style>#}
 
-</div>
-</nav>
+    {#<script src="{% static 'js/main.js' %}"></script>#}
+
+
+    </nav>
+
+
+</body>

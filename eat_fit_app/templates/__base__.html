@@ -27,17 +27,27 @@
 </head>
 
 <body class="bg-secondary d-flex flex-column" style="min-height: 100%;">
+
+<div class="loadingOverlay d-flex align-items-center justify-content-center" id="loadingOverlay">
+    <div class="spinner-border" role="status"></div>
+</div>
+
+
+
 {% include 'navbar.html' %}
+
 
 {% block header %}
 
 {% endblock header %}
 
 <main class="flex-grow-1">
+
     {% block content %}
 
     {% endblock content %}
 </main>
+
 
 <footer class="text-center text-lg-start bg-light">
     <div class="text-center p-4 styled-text-footer">
@@ -49,6 +59,9 @@
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 {#<script src="{% static 'js/jquery.min.js' %}"></script>#}
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+
 {% block javascript %}
 
 {% endblock javascript %}
