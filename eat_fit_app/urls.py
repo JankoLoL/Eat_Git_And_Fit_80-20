@@ -18,13 +18,14 @@ from django.conf.urls.static import static
 from django.urls import path, include, re_path
 from eat_fit_app.views import RecipeListView, RecipeDetailsView, CategoryListView, RecipeAddView, \
     RecipeEditView, RecipeDeleteView, OccasionListView, MainView, \
-    RecipeByCategoryView, RecipeByOccasionView, CuisineListView, RecipeByCuisineView
+    RecipeByCategoryView, RecipeByOccasionView, CuisineListView, RecipeByCuisineView, UserRecipeListVew
 from eat_fit_django_project import settings
 
 urlpatterns = [
 
     path('', MainView.as_view() , name='index'),
     path('recipes/', RecipeListView.as_view(), name='recipes'),
+    path('my-recipes/', UserRecipeListVew.as_view(), name='user-recipes'),
     path('recipes/<int:recipe_id>/', RecipeDetailsView.as_view(), name='recipe-details'),
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('recipes/category/<int:category_id>/', RecipeByCategoryView.as_view(), name='recipes-by-category'),

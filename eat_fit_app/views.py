@@ -48,6 +48,12 @@ class RecipeDetailsView(View):
         return render(request, "app-recipe-details.html", context)
 
 
+class UserRecipeListVew(LoginRequiredMixin, View):
+    def get(self, request):
+        user_recipes = Recipe.objects.filter(user=request.user).prefetch_related('recipe_images')
+        return render(request, "app-recipes.html", {"recipes": user_recipes})
+
+
 class CategoryListView(View):
     def get(self, request):
         categories = Category.objects.all()
