@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
-from eat_fit_app.forms import RecipeForm, RecipeIngredientFormSet
+from eat_fit_app.forms import RecipeForm, RecipeIngredientFormSet, IngredientForm
 from eat_fit_app.models import Recipe, Category, Occasion, Cuisine, RecipeCategory, RecipeOccasion, RecipeCuisine, \
     Ingredients, RecipeIngredientsMeasure
 import logging
@@ -180,6 +180,23 @@ class RecipeDeleteView(LoginRequiredMixin, View):
         recipe = Recipe.objects.get(id=recipe_id)
         recipe.delete()
         return redirect('recipes')
+
+
+class IngredientAddView(LoginRequiredMixin, View):
+    def get(self,request):
+        form = IngredientForm
+        return render(request, 'app-ingredient-add.html', {'form': form})
+
+    def post(self, request):
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ingredient added successfully.")
+            return redirect('ingredient-add')
+        else:
+            messages.error(request, "There was an error with your submission")
+            return render(request, 'app-ingredient-add.html', {'form': form})
+
 
 
 class OccasionListView(View):

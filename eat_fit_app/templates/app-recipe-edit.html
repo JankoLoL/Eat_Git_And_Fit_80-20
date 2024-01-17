@@ -66,59 +66,63 @@
                 {% for ingredient_form in formset %}
                     <div class="row mb-2 ingredient-form">
                         {{ ingredient_form.id.as_hidden }}
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             {{ ingredient_form.ingredients.label_tag }}
                             {{ ingredient_form.ingredients }}
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             {{ ingredient_form.quantity.label_tag }}
                             {{ ingredient_form.quantity }}
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             {{ ingredient_form.measure.label_tag }}
                             {{ ingredient_form.measure }}
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-danger remove-ingredient-btn">Remove ingredient
-                            </button>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="button" class="remove-ingredient btn btn-danger">Remove</button>
                         </div>
                     </div>
                 {% endfor %}
-                <div class="row mb-2">
-                    <div class="col-md-12">
-                        <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
-                    </div>
+            </div>
+            <div class="col-md-12 d-flex justify-content-between">
+                <div>
+                    <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="{% url 'ingredient-add' %}">Add new ingredient to database</a>
                 </div>
             </div>
+    </div>
+    </div>
 
 
-        </form>
+    </form>
 
-        <template id="ingredient-form-template">
-            <div class="row mb-2 ingredient-form">
-                <div class="col-md-3">
-                    <label for="id_form-__prefix__-ingredient">Ingredient</label>
-                    <select id="id_form-__prefix__-ingredient" name="form-__prefix__-ingredient"
-                            class="form-control">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="id_form-__prefix__-quantity">Quantity</label>
-                    <input type="number" id="id_form-__prefix__-quantity" name="form-__prefix__-quantity"
-                           class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <label for="id_form-__prefix__-measure">Measure</label>
-                    <select id="id_form-__prefix__-measure" name="form-__prefix__-measure" class="form-control">
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>
-                </div>
+    <template id="ingredient-form-template">
+        <div class="row mb-2 ingredient-form">
+            <div class="col-md-3">
+                <label for="id_form-__prefix__-ingredient">Ingredient</label>
+                <select id="id_form-__prefix__-ingredient" name="form-__prefix__-ingredient"
+                        class="form-control">
+                </select>
             </div>
-        </template>
+            <div class="col-md-2">
+                <label for="id_form-__prefix__-quantity">Quantity</label>
+                <input type="number" id="id_form-__prefix__-quantity" name="form-__prefix__-quantity"
+                       class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="id_form-__prefix__-measure">Measure</label>
+                <select id="id_form-__prefix__-measure" name="form-__prefix__-measure" class="form-control">
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-danger remove-ingredient-btn">Remove</button>
+            </div>
+        </div>
+    </template>
 
     </div>
 

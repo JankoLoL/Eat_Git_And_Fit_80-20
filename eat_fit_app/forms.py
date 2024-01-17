@@ -44,3 +44,12 @@ class RecipeIngredientForm(forms.ModelForm):
 
 
 RecipeIngredientFormSet = inlineformset_factory(Recipe, RecipeIngredients, form=RecipeIngredientForm, extra=1)
+
+
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredients
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'})
+        }
