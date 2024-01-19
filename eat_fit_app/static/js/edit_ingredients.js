@@ -3,28 +3,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const formSetContainer = document.getElementById('form-set');
 
     addButton.addEventListener('click', function () {
-        console.log('Add button clicked');
-
         let totalForms = document.querySelector("input[name='recipeingredients_set-TOTAL_FORMS']");
-        if (totalForms) {
-            let formNum = parseInt(totalForms.value); // Get the current number of forms
-            let newForm = formSetContainer.children[0].cloneNode(true); // Clone the first form
+        let formNum = parseInt(totalForms.value);
 
-            newForm.innerHTML = newForm.innerHTML.replace(/-\d-/g, `-${formNum}-`); // Replace the form number
-            formSetContainer.appendChild(newForm);
-
-            totalForms.value = formNum + 1; // Increment the form count
-        } else {
-            console.error("Total forms input not found");
+        let firstIngredientForm = formSetContainer.querySelector('.ingredient-form');
+        if (!firstIngredientForm) {
+            return;
         }
+        let newForm = firstIngredientForm.cloneNode(true);
+        newForm.innerHTML = newForm.innerHTML.replace(/-\d-/g, `-${formNum}-`);
+        formSetContainer.appendChild(newForm);
+        totalForms.value = formNum + 1;
     });
+
 
     formSetContainer.addEventListener('click', function (e) {
         if (e.target && e.target.classList.contains('remove-ingredient')) {
             e.preventDefault();
             e.target.closest('.ingredient-form').remove();
-
-            // Update the total forms count
             let totalForms = document.querySelector("input[name='recipeingredients_set-TOTAL_FORMS']");
             totalForms.value = parseInt(totalForms.value) - 1;
         }

@@ -61,7 +61,7 @@
             </div>
 
             <!-- Ingredients section -->
-            <div id="ingredients-container">
+            <div id="form-set">
                 {{ formset.management_form }}
                 {% for ingredient_form in formset %}
                     <div class="row mb-2 ingredient-form">
@@ -84,9 +84,14 @@
                     </div>
                 {% endfor %}
             </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" id="add-more" class="btn btn-primary">Add More Ingredients</button>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-12 d-flex justify-content-between">
                 <div>
-                    <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add ingredient</button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <a href="javascript:history.back();" class="btn btn-secondary">Go Back</a>
                 </div>
@@ -96,7 +101,6 @@
             </div>
     </div>
     </div>
-
 
     </form>
 
@@ -156,7 +160,11 @@
     </div>
 
 {% endblock content %}
+
+
 {% block javascript %}
-    <script src="{% static 'js/add_ingredient.js' %}"></script>
+
+    <script src="{% static 'js/edit_ingredients.js' %}"></script>
 
 {% endblock javascript %}
+</div>

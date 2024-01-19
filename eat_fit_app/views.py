@@ -144,7 +144,7 @@ class RecipeEditView(LoginRequiredMixin, View):
 
     def post(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        form = RecipeForm(request.POST, instance=recipe)
+        form = RecipeForm(request.POST,request.FILES, instance=recipe)
         formset = RecipeIngredientFormSet(request.POST, instance=recipe)
 
         if not (request.user == recipe.user or request.user.is_staff):
@@ -154,20 +154,21 @@ class RecipeEditView(LoginRequiredMixin, View):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
+            messages.success(request, "Recipe updated successfully.")
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
             messages.error(request, "There was an error with your submission. Please check the form.")
 
-            ingredients = list(Ingredients.objects.values('id', 'name'))
-            measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
+            # ingredients = list(Ingredients.objects.values('id', 'name'))
+            # measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
 
             return render(request, 'app-recipe-edit.html', {
                 'form': form,
                 'formset': formset,
                 'recipe': recipe,
-                'ingredients_json': json.dumps(ingredients),
-                'measures_json': json.dumps(measures),
-                'errors': str(form.errors) + str(formset.errors)
+                # 'ingredients_json': json.dumps(ingredients),
+                # 'measures_json': json.dumps(measures),
+                # 'errors': str(form.errors) + str(formset.errors)
             })
 
 
