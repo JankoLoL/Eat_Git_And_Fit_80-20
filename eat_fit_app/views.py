@@ -158,17 +158,10 @@ class RecipeEditView(LoginRequiredMixin, View):
             return redirect('recipe-details', recipe_id=recipe.id)
         else:
             messages.error(request, "There was an error with your submission. Please check the form.")
-
-            # ingredients = list(Ingredients.objects.values('id', 'name'))
-            # measures = list(RecipeIngredientsMeasure.objects.values('id', 'measure'))
-
             return render(request, 'app-recipe-edit.html', {
                 'form': form,
                 'formset': formset,
                 'recipe': recipe,
-                # 'ingredients_json': json.dumps(ingredients),
-                # 'measures_json': json.dumps(measures),
-                # 'errors': str(form.errors) + str(formset.errors)
             })
 
 
