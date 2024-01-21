@@ -143,7 +143,7 @@
                                 {{ image.description }}</p>
                         </div>
                         {% if request.user == image.user or request.user.is_staff %}
-                            <a href="{% url 'image_handler:delete-recipe-image' recipe.id image.id %}"
+                            <a href="{% url 'image_handler:recipe-image-delete' recipe.id image.id %}"
                                class="btn btn-danger">Delete</a>
                         {% endif %}
                     </div>
