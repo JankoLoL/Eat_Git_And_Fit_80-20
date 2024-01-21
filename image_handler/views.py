@@ -27,12 +27,11 @@ class RecipeImageUploadView(View):
             recipe_image.user = request.user
             recipe_image.save()
             return redirect('recipe-details', recipe_id=recipe_id)
-        return render(request, 'add-recipe-image.html', {'form': form, 'recipe_id': recipe_id })
-
+        return render(request, 'add-recipe-image.html', {'form': form, 'recipe_id': recipe_id})
 
 
 class RecipeImageDeleteView(View):
-    def get(self,request, recipe_id, image_id):
+    def get(self, request, recipe_id, image_id):
         recipe_image = get_object_or_404(RecipeImage, id=image_id, recipe_id=recipe_id)
         if request.user == recipe_image.user or request.user.is_staff:
             recipe_image.delete()
