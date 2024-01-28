@@ -51,7 +51,11 @@ class RecipeDetailsView(View):
 class UserRecipeListVew(LoginRequiredMixin, View):
     def get(self, request):
         user_recipes = Recipe.objects.filter(user=request.user).prefetch_related('recipe_images')
-        return render(request, "app-recipes.html", {"recipes": user_recipes})
+
+        for recipe in user_recipes:
+            main_image = recipe.recipe_images.filter(type='main_image').first()
+            recipe.main_image_url = main_image.image_file.url if main_image else None
+        return render(request, "user-recipes.html", {"recipes": user_recipes})
 
 
 class CategoryListView(View):
@@ -144,7 +148,7 @@ class RecipeEditView(LoginRequiredMixin, View):
 
     def post(self, request, recipe_id):
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        form = RecipeForm(request.POST,request.FILES, instance=recipe)
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
         formset = RecipeIngredientFormSet(request.POST, instance=recipe)
 
         if not (request.user == recipe.user or request.user.is_staff):
@@ -177,7 +181,7 @@ class RecipeDeleteView(LoginRequiredMixin, View):
 
 
 class IngredientAddView(LoginRequiredMixin, View):
-    def get(self,request):
+    def get(self, request):
         form = IngredientForm
         return render(request, 'app-ingredient-add.html', {'form': form})
 
@@ -190,7 +194,6 @@ class IngredientAddView(LoginRequiredMixin, View):
         else:
             messages.error(request, "There was an error with your submission")
             return render(request, 'app-ingredient-add.html', {'form': form})
-
 
 
 class OccasionListView(View):

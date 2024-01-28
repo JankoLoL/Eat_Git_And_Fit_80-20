@@ -90,7 +90,7 @@
                 <button type="button" id="add-more" class="btn btn-primary">Add More Ingredients</button>
             </div>
             <div>
-                <a class="btn btn-primary" href="{% url 'ingredient-add' %}">Add new ingredient to database</a>
+                <a class="btn btn-primary" href="{% url 'ingredient-add' %}">Add New Ingredient to Database</a>
             </div>
         </div>
     </div>
@@ -127,13 +127,13 @@
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            Image type: {{ image.type }}
+                           <b> Image type:</b> {{ image.type }}
                             <br>
-                            Image name: {{ image.name|title }}
+                            <b>Image name:</b> {{ image.name|title }}
                         </div>
                         <img src="{{ image.image_file.url }}" class="card-img-top" alt="{{ image.alt_description }}">
                         <div class="card-body">
-                            <p class="card-text">Description:
+                            <p class="card-text"><b>Description:</b>
                                 <br>
                                 {{ image.description }}</p>
                         </div>
@@ -147,10 +147,7 @@
                 <div class="col">
                     <p>No images uploaded for this recipe yet.</p>
                 </div>
-
-
                 </div>
-
 
             {% endfor %}
         <a href="{% url 'image_handler:recipe-image-upload' recipe_id=recipe.id %}" class="btn btn-success">Upload
