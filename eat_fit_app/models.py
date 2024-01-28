@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
-# Create your models here.
+from django.urls import reverse
 
 
 class Recipe(models.Model):
@@ -13,6 +11,12 @@ class Recipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='recipes')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('recipe-details', args=[str(self.id)])
+
+    class Meta:
+        ordering = ['-created']
 
     def __str__(self):
         return self.name
@@ -55,10 +59,11 @@ class Ingredients(models.Model):
 
 
 class RecipeIngredients(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients_relation')
+    ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE, related_name='recipe_relation')
     quantity = models.IntegerField()
-    measure = models.ForeignKey('RecipeIngredientsMeasure', on_delete=models.CASCADE, null=True)
+    measure = models.ForeignKey('RecipeIngredientsMeasure', on_delete=models.CASCADE, null=True,
+                                related_name='quantity_measurements')
 
     class Meta:
         verbose_name_plural = 'Recipe Ingredients'
@@ -75,7 +80,7 @@ class RecipeIngredientsMeasure(models.Model):
 
 
 class Occasion(models.Model):
-    name = models.CharField(max_length=128, default='')
+    name = models.CharField(max_length=128)
     description = models.TextField(max_length=128)
     recipes = models.ManyToManyField(Recipe, through='RecipeOccasion', related_name='occasions')
 

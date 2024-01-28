@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class MainView(View):
     def get(self, request):
-        return render(request, "index.html")
+        return render(request, "home.html")
 
 
 class RecipeListView(View):
