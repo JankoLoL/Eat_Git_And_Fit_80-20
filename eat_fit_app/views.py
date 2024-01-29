@@ -40,7 +40,7 @@ class RecipeDetailsView(View):
             'recipe': recipe,
             'main_image': main_image,
             'additional_images': additional_images,
-            'ingredients': recipe.recipeingredients_set.all(),
+            'ingredients': recipe.ingredients_relation.all(),
             'categories': recipe.categories.all(),
             'occasions': recipe.occasions.all(),
             'cuisines': recipe.cuisines.all(),
