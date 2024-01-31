@@ -1,7 +1,7 @@
 import json
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
@@ -18,16 +18,11 @@ class MainView(View):
         return render(request, "home.html")
 
 
-class RecipeListView(View):
-
-    def get(self, request):
-        recipes = Recipe.objects.prefetch_related('recipe_images').all()
-
-        for recipe in recipes:
-            main_image = recipe.recipe_images.filter(type='main_image').first()
-            recipe.main_image_url = main_image.image_file.url if main_image else None
-
-        return render(request, "app-recipes.html", {"recipes": recipes})
+class RecipeListView(ListView):
+    model = Recipe
+    template_name = "app-recipes.html"
+    context_object_name = "recipes"
+    queryset = Recipe.objects.prefetch_related('recipe_images')
 
 
 class RecipeDetailsView(View):
@@ -53,8 +48,7 @@ class UserRecipeListVew(LoginRequiredMixin, View):
         user_recipes = Recipe.objects.filter(user=request.user).prefetch_related('recipe_images')
 
         for recipe in user_recipes:
-            main_image = recipe.recipe_images.filter(type='main_image').first()
-            recipe.main_image_url = main_image.image_file.url if main_image else None
+            recipe.main_image_url = recipe.get_main_image_url()
         return render(request, "user-recipes.html", {"recipes": user_recipes})
 
 
@@ -64,19 +58,22 @@ class CategoryListView(View):
         return render(request, "app-categories.html", {"categories": categories})
 
 
-class RecipeByCategoryView(View):
-    def get(self, request, category_id):
-        category = Category.objects.get(id=category_id)
-        recipes = Recipe.objects.filter(categories=category)
-        return render(request, "app-recipes.html", {"recipes": recipes})
+class RecipeByCategoryView(ListView):
+    model = Recipe
+    template_name = "app-recipes.html"
+    context_object_name = "recipes"
+
+    def get_queryset(self):
+        return Recipe.objects.filter(categories=self.kwargs['category_id'])
 
 
-class RecipeByOccasionView(View):
-    def get(self, request, occasion_id):
-        occasion = Occasion.objects.get(id=occasion_id)
-        recipes = Recipe.objects.filter(occasions=occasion)
-        return render(request, "app-recipes.html", {"recipes": recipes})
+class RecipeByOccasionView(ListView):
+    model = Recipe
+    template_name = "app-recipes.html"
+    context_object_name = "recipes"
 
+    def get_queryset(self):
+        return Recipe.objects.filter(occasions=self.kwargs['occasion_id'])
 
 class RecipeByCuisineView(View):
 
@@ -93,7 +90,6 @@ class RecipeAddView(LoginRequiredMixin, View):
         return super().handle_no_permission()
 
     def get(self, request):
-
         form = RecipeForm()
         formset = RecipeIngredientFormSet()
         return render(request, 'app-recipe-add.html', {'form': form, 'formset': formset})
@@ -114,6 +110,7 @@ class RecipeAddView(LoginRequiredMixin, View):
             formset.instance = recipe
             if formset.is_valid():
                 formset.save()
+                messages.success(request, "Your recipe was added successfully.")
                 return redirect('recipe-details', recipe_id=recipe.id)
             else:
                 print("Form errors:", formset.errors)
@@ -172,11 +169,12 @@ class RecipeEditView(LoginRequiredMixin, View):
 class RecipeDeleteView(LoginRequiredMixin, View):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
-        return render(request, 'app-recipe-delete.html', {'recipe': recipe})
+        return render(request, 'app-recipe-delete.html', {'recipe': recipe, 'recipe_id': recipe_id})
 
     def post(self, request, recipe_id):
         recipe = Recipe.objects.get(id=recipe_id)
         recipe.delete()
+        messages.success(request, "Your recipe was successfully deleted")
         return redirect('recipes')
 
 

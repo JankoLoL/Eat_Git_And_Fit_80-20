@@ -26,6 +26,7 @@ class RecipeImageUploadView(View):
             recipe_image.recipe = recipe
             recipe_image.user = request.user
             recipe_image.save()
+            messages.success(request, "Image added successfully")
             return redirect('recipe-edit', recipe_id=recipe_id)
         return render(request, 'add-recipe-image.html', {'form': form, 'recipe_id': recipe_id})
 

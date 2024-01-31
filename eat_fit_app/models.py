@@ -15,6 +15,10 @@ class Recipe(models.Model):
     def get_absolute_url(self):
         return reverse('recipe-details', args=[str(self.id)])
 
+    def get_main_image_url(self):
+        main_image = self.recipe_images.filter(type='main_image').first()
+        return main_image.image_file.url if main_image else None
+
     class Meta:
         ordering = ['-created']
 
