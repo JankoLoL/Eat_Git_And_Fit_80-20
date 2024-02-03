@@ -125,24 +125,19 @@
                 <h3 class="mt-4 mb-3">Images</h3>
                 <div class="row">
                     {% for image in recipe.recipe_images.all %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card recipe-card shadow">
+                        <div class="col-md-6 mb-4">
+                            <div class="card recipe-card shadow"
+                                 style="height: 100%; display: flex; flex-direction: column;">
                                 <div class="card-header bg-light">
-                                    <b>Image type:</b> {{ image.type }}
-                                    <br>
                                     <b>Image name:</b> {{ image.name|title }}
                                 </div>
                                 <img src="{{ image.image_file.url }}" class="card-img-top"
-                                     alt="{{ image.alt_description }}">
-                                <div class="card-body">
+                                     alt="{{ image.alt_description }}" style="height: 400px; object-fit: cover;">
+                                <div class="card-body" style="flex-grow: 1;">
                                     <p class="card-text"><b>Description:</b>
                                         <br>
                                         {{ image.description|linebreaksbr }}</p>
                                 </div>
-                                {% if request.user == image.user or request.user.is_staff %}
-                                    <a href="{% url 'image_handler:recipe-image-delete' recipe.id image.id %}"
-                                       class="btn btn-danger">Delete</a>
-                                {% endif %}
                             </div>
                         </div>
                     {% empty %}
@@ -150,6 +145,7 @@
                             <p>No images uploaded for this recipe yet.</p>
                         </div>
                     {% endfor %}
+
                 </div>
             </div>
 
