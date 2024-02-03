@@ -24,6 +24,17 @@ class UserRegisterView(CreateView):
 class UserLoginView(LoginView):
     form_class = AuthenticationForm
     template_name = 'user/login.html'
+    redirect_authenticated_user = True
+
+    def form_invalid(self, form):
+        if form.non_field_errors():
+            messages.error(self.request, "Invalid username or password", extra_tags='danger')
+
+        return redirect('user:login')
+
+    def get_success_url(self):
+        messages.success(self.request, "You have successfully logged in")
+        return reverse_lazy('index')
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):
