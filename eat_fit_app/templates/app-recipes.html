@@ -4,24 +4,63 @@
 {% block content %}
     <div class="page-container">
 
-        <div class="row">
-            {% for recipe in recipes %}
-                <div class="col-md-4 mb-4">
-                    <div class="card" style="width: 18rem; height: 200px; position: relative;">
-                        {% if recipe.main_image_url %}
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('{{ recipe.main_image_url }}') center/cover no-repeat; opacity: 0.5; z-index: 1;"></div>
-                        {% endif %}
-                        <div class="card-body" style="position: relative; z-index: 2;">
-                            <h5 class="card-title">{{ recipe.name }}</h5>
-                            <p class="card-text">{{ recipe.description }}</p>
-                            <br>
-                            <br>
-                            <br>
-                            <a href="{% url 'recipe-details' recipe.id %}">Go to details</a>
-                        </div>
+    <div class="row">
+        {% for recipe in recipes %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem; height: 200px; position: relative;">
+                    {% if recipe.main_image_url %}
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('{{ recipe.main_image_url }}') center/cover no-repeat; opacity: 0.5; z-index: 1;"></div>
+                    {% endif %}
+                    <div class="card-body" style="position: relative; z-index: 2;">
+                        <h5 class="card-title">{{ recipe.name }}</h5>
+                        <p class="card-text">{{ recipe.description }}</p>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="{% url 'recipe-details' recipe.id %}">Go to details</a>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+
+        <nav aria-label="Page navigation" class="d-flex justify-content-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link " href="?page=1">First Page</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">First Page</span>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next Page</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last Page</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Next Page</span>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Last Page</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 {% endblock content %}

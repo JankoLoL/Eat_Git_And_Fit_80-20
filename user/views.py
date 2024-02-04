@@ -16,9 +16,8 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy('user:login')
 
     def form_valid(self, form):
-        valid = super(UserRegisterView, self).form_valid(form)
-
-        return valid
+        messages.success(self.request, "Registration successful. You can now login.")
+        return super().form_valid(form)
 
 
 class UserLoginView(LoginView):
@@ -38,6 +37,11 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):
+
+    def get_success_url(self):
+        messages.success(self.request, "You have been successfully logged out")
+        return reverse_lazy('index')
+
     next_page = reverse_lazy('index')
 
 

@@ -1,7 +1,9 @@
 import json
 
 from django.shortcuts import render, redirect, get_object_or_404
+
 from django.views import View
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
@@ -18,17 +20,33 @@ class MainView(View):
         return render(request, "index.html")
 
 
-class RecipeListView(View):
+# class RecipeListView(View):
+#
+#     def get(self, request):
+#         recipes = Recipe.objects.prefetch_related('recipe_images').all()
+#
+#         for recipe in recipes:
+#             main_image = recipe.recipe_images.filter(type='main_image').first()
+#             recipe.main_image_url = main_image.image_file.url if main_image else None
+#
+#         return render(request, "app-recipes.html", {"recipes": recipes})
 
-    def get(self, request):
-        recipes = Recipe.objects.prefetch_related('recipe_images').all()
 
+class RecipeListView(ListView):
+    model = Recipe
+    paginate_by = 10
+    template_name = 'app-recipes.html'
+    context_object_name = 'recipes'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipes = context['recipes']
         for recipe in recipes:
             main_image = recipe.recipe_images.filter(type='main_image').first()
             recipe.main_image_url = main_image.image_file.url if main_image else None
+        return context
 
-        return render(request, "app-recipes.html", {"recipes": recipes})
-
+        
 
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):
