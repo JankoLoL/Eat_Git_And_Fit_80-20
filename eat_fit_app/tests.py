@@ -4,7 +4,6 @@ from django.test import TestCase
 import pytest
 from django.test import Client
 from django.urls import reverse
-from eat_fit_app.forms import RecipeAddForm, LoginForm
 from eat_fit_app.models import Recipe, Category, Occasion, RecipeCategory, RecipeOccasion
 
 
