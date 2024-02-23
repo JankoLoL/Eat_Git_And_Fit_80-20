@@ -46,7 +46,6 @@ class RecipeListView(ListView):
             recipe.main_image_url = main_image.image_file.url if main_image else None
         return context
 
-        
 
 class RecipeDetailsView(View):
     def get(self, request, recipe_id):

@@ -3,7 +3,6 @@ from django import forms
 from django.forms import inlineformset_factory
 
 
-
 class RecipeForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),

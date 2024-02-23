@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('', MainView.as_view() , name='index'),
     path('recipes/', RecipeListView.as_view(), name='recipes'),
-    path('my-recipes/', UserRecipeListVew.as_view(), name='user-recipes'),
+    path('my-recipes/', UserRecipeListVew.as_view(), name='my-recipes'),
     path('recipes/<int:recipe_id>/', RecipeDetailsView.as_view(), name='recipe-details'),
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('recipes/category/<int:category_id>/', RecipeByCategoryView.as_view(), name='recipes-by-category'),
