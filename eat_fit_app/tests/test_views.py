@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from eat_fit_app.models import Recipe, Category, Occasion, Cuisine
+from eat_fit_app.models import Recipe, Category, Occasion, Cuisine, RecipeOccasion
 
 
 class ViewTest(TestCase):
@@ -34,13 +34,26 @@ class RecipeListViewTest(ViewTest):
         self.assertTrue('recipes' in response.context)
 
 
-# class RecipeOccasionListViewTest(ViewTest):
-#
-#     def test_recipe_occasion_list_view(self):
-#         response = self.client.get(reverse('recipes-by-occasion', kwargs={'occasion_id': self.occasion.id}))
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'app-occasions.html')
-#         self.assertTrue('occasion' in response.context)
+class RecipeOccasionListViewTest(ViewTest):
+
+    def test_recipe_occasion_list_view(self):
+        response = self.client.get(reverse('recipes-by-occasion', kwargs={'occasion_id': self.occasion.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app-recipes.html')
+
+        filtered_recipes = response.context['recipes']
+        for recipe in filtered_recipes:
+            self.assertIn(self.occasion, recipe.occasions.all())
+
+    def test_occasion_selection_redirect(self):
+        RecipeOccasion.objects.create(recipe=self.recipe, occasion=self.occasion)
+        response = self.client.get(reverse('recipes-by-occasion', kwargs={'occasion_id': self.occasion.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app-recipes.html')
+        self.assertTrue('recipes' in response.context)
+        filtered_recipes = response.context['recipes']
+        self.assertEqual(filtered_recipes.count(), 1)
 
 
 class RecipeDetailsViewTest(ViewTest):
@@ -76,9 +89,9 @@ class RecipeAddViewTest(ViewTest):
     #         'name': 'New Recipe',
     #         'description': 'New Description',
     #         'instructions': 'New Instructions',
-    #         'category': "New Category",
-    #         'occasion': "New Occasion",
-    #         'cuisine': "New Cuisine"
+    #         'category': self.category.id,
+    #         'occasion': self.occasion.id,
+    #         'cuisine': self.cuisine.id
     #     })
     #
-    #
+    #     self.assertEqual(response.status_code, 302)
