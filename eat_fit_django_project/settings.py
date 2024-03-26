@@ -13,6 +13,8 @@ import os.path
 from pathlib import Path
 from decouple import config
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,6 +36,13 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
+
+DATABASE_URL = config('DATABASE_URL', default=None)
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+else:
+    DATABASES['default'] = dj_database_url.config(default=f'sqlite:///{BASE_DIR}/db.sqlite3')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
