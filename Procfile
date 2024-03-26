@@ -1,0 +1,1 @@
+web: gunicorn eat_fit_django_project.wsgi --log-file -
