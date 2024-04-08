@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os.path
 from pathlib import Path
 
-import django_heroku
 import dj_database_url
 from decouple import config
 
@@ -160,5 +159,3 @@ LOGIN_REDIRECT_URL = '/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-
-django_heroku.settings(locals())
